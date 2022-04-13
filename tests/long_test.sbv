@@ -1,0 +1,60 @@
+00:00:00.00, 00:00:05.625
+In this video i'm going to describe how the text to speech addon works
+
+00:00:09.708, 00:00:12.958
+Firstly, we need to install the addon
+
+00:00:12.958, 00:00:21.750
+If you're using Windows, you will need to right click blender and click run as administrator, just this one time
+
+00:00:21.750, 00:00:29.708
+We can install the addon by opening the preferences in Blender, and installing the Text to Speech zip file
+
+00:00:29.708, 00:00:35.00
+It might take a moment to install the google text to speech library
+
+00:00:35.916, 00:00:42.41
+When you navigate to the video editing interface you should see the Text to Speech tab
+
+00:00:43.41, 00:00:49.583
+If it doesn't appear, you can toggle the system console to see any errors in Windows
+
+00:00:50.583, 00:00:55.541
+In linux you can open blender from a terminal to see the output
+
+00:00:56.541, 00:00:59.250
+Let me know if you have any issues
+
+00:01:00.250, 00:01:07.666
+You can make individual audio strips by typing something in the text field and pressing speechify
+
+00:01:08.666, 00:01:15.666
+Alternatively you can import a closed caption file and it will convert all the strips to audio
+
+00:01:16.666, 00:01:21.125
+Accent can be chosen before speechify or file import
+
+00:01:22.125, 00:01:29.125
+Currently only text files, s.r.t and s.b.v files are supported
+
+00:01:30.125, 00:01:35.583
+If time codes are provided, audio strips will be placed at that time
+
+00:01:36.583, 00:01:42.375
+In the case of txt files, audio strips will be placed one after another
+
+00:01:43.375, 00:01:52.333
+After importing, you can move the audio strips around, delete them, and mix with individual audio strips
+
+00:01:53.333, 00:02:03.41
+You can then export closed caption files and it will export an updated file that corresponds to your current audio strips
+
+00:02:04.41, 00:02:12.375
+You can save blender, reopen and it will remember the text associated with the audio strips for further editing
+
+00:02:13.375, 00:02:15.00
+Thanks for watching
+
+00:02:16.00, 00:02:18.791
+Let me know if you have any issues!
+

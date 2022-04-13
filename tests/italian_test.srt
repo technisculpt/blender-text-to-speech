@@ -1,0 +1,80 @@
+1
+0:0:0,0 --> 0:0:6,583
+In questo video descriverò come funziona il componente aggiuntivo di sintesi vocale
+
+2
+0:0:12,458 --> 0:0:16,208
+Innanzitutto, dobbiamo installare l'addon
+
+3
+0:0:16,208 --> 0:0:28,666
+Se stai utilizzando Windows, dovrai fare clic con il pulsante destro del mouse su Blender e fare clic su Esegui come amministratore, solo questa volta
+
+4
+0:0:28,666 --> 0:0:37,125
+Possiamo installare l'addon aprendo le preferenze in Blender e installando il file zip di sintesi vocale
+
+5
+0:0:37,125 --> 0:0:43,375
+Potrebbe volerci un momento per installare la libreria di sintesi vocale di Google
+
+6
+0:0:43,375 --> 0:0:50,166
+Quando accedi all'interfaccia di editing video dovresti vedere la scheda Sintesi vocale
+
+7
+0:0:50,291 --> 0:0:58,583
+Se non viene visualizzato, puoi attivare la console di sistema per visualizzare eventuali errori in Windows
+
+8
+0:0:59,583 --> 0:1:4,708
+In Linux puoi aprire Blender da un terminale per vedere l'output
+
+9
+0:1:5,708 --> 0:1:8,375
+Fammi sapere se hai qualche problema
+
+10
+0:1:9,375 --> 0:1:16,583
+Puoi creare singole strisce audio digitando qualcosa nel campo di testo e premendo speechify
+
+11
+0:1:17,583 --> 0:1:24,583
+In alternativa puoi importare un file di sottotitoli e convertirà tutte le strisce in audio
+
+12
+0:1:25,583 --> 0:1:30,666
+L'accento può essere scelto prima di speechify o importare file
+
+13
+0:1:31,666 --> 0:1:40,750
+Attualmente sono supportati solo file di testo, file s.r.t e s.b.v
+
+14
+0:1:41,750 --> 0:1:49,208
+Se vengono forniti i codici temporali, le strisce audio verranno posizionate in quel momento
+
+15
+0:1:50,208 --> 0:1:57,375
+Nel caso di file txt, le strisce audio verranno posizionate una dopo l'altra
+
+16
+0:1:58,375 --> 0:2:7,0
+Dopo l'importazione, puoi spostare le strisce audio, eliminarle e mixare con singole strisce audio
+
+17
+0:2:8,0 --> 0:2:18,83
+È quindi possibile esportare file di sottotitoli e verrà esportato un file aggiornato che corrisponde alle strisce audio correnti
+
+18
+0:2:19,83 --> 0:2:27,666
+Puoi salvare il frullatore, riaprirlo e ricorderà il testo associato alle strisce audio per ulteriori modifiche
+
+19
+0:2:28,666 --> 0:2:30,458
+Grazie per la visione
+
+20
+0:2:31,458 --> 0:2:34,166
+Fammi sapere se hai qualche problema!
+

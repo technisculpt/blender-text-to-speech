@@ -1,0 +1,60 @@
+0:0:0.0, 0:0:6.583
+In questo video descriverò come funziona il componente aggiuntivo di sintesi vocale
+
+0:0:12.416, 0:0:16.166
+Innanzitutto, dobbiamo installare l'addon
+
+0:0:16.166, 0:0:28.625
+Se stai utilizzando Windows, dovrai fare clic con il pulsante destro del mouse su Blender e fare clic su Esegui come amministratore, solo questa volta
+
+0:0:28.625, 0:0:37.83
+Possiamo installare l'addon aprendo le preferenze in Blender e installando il file zip di sintesi vocale
+
+0:0:37.125, 0:0:43.375
+Potrebbe volerci un momento per installare la libreria di sintesi vocale di Google
+
+0:0:43.375, 0:0:50.166
+Quando accedi all'interfaccia di editing video dovresti vedere la scheda Sintesi vocale
+
+0:0:50.250, 0:0:58.541
+Se non viene visualizzato, puoi attivare la console di sistema per visualizzare eventuali errori in Windows
+
+0:0:59.541, 0:1:4.666
+In Linux puoi aprire Blender da un terminale per vedere l'output
+
+0:1:5.666, 0:1:8.333
+Fammi sapere se hai qualche problema
+
+0:1:9.375, 0:1:16.583
+Puoi creare singole strisce audio digitando qualcosa nel campo di testo e premendo speechify
+
+0:1:17.541, 0:1:24.541
+In alternativa puoi importare un file di sottotitoli e convertirà tutte le strisce in audio
+
+0:1:25.541, 0:1:30.625
+L'accento può essere scelto prima di speechify o importare file
+
+0:1:31.625, 0:1:40.708
+Attualmente sono supportati solo file di testo, file s.r.t e s.b.v
+
+0:1:41.750, 0:1:49.208
+Se vengono forniti i codici temporali, le strisce audio verranno posizionate in quel momento
+
+0:1:50.166, 0:1:57.333
+Nel caso di file txt, le strisce audio verranno posizionate una dopo l'altra
+
+0:1:58.375, 0:2:7.0
+Dopo l'importazione, puoi spostare le strisce audio, eliminarle e mixare con singole strisce audio
+
+0:2:8.0, 0:2:18.83
+È quindi possibile esportare file di sottotitoli e verrà esportato un file aggiornato che corrisponde alle strisce audio correnti
+
+0:2:19.41, 0:2:27.625
+Puoi salvare il frullatore, riaprirlo e ricorderà il testo associato alle strisce audio per ulteriori modifiche
+
+0:2:28.625, 0:2:30.416
+Grazie per la visione
+
+0:2:31.416, 0:2:34.125
+Fammi sapere se hai qualche problema!
+

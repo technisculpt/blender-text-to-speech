@@ -1,0 +1,39 @@
+In this video i'm going to describe how the text to speech addon works
+
+Firstly, we need to install the addon
+
+If you're using Windows, you will need to right click blender and click run as administrator, just this one time
+
+We can install the addon by opening the preferences in Blender, and installing the Text to Speech zip file
+
+It might take a moment to install the google text to speech library
+
+When you navigate to the video editing interface you should see the Text to Speech tab
+
+If it doesn't appear, you can toggle the system console to see any errors in Windows
+
+In linux you can open blender from a terminal to see the output
+
+Let me know if you have any issues
+
+You can make individual audio strips by typing something in the text field and pressing speechify
+
+Alternatively you can import a closed caption file and it will convert all the strips to audio
+
+Accent can be chosen before speechify or file import
+
+Currently only text files, s.r.t and s.b.v files are supported
+
+If time codes are provided, audio strips will be placed at that time
+
+In the case of txt files, audio strips will be placed one after another
+
+After importing, you can move the audio strips around, delete them, and mix with individual audio strips
+
+You can then export closed caption files and it will export an updated file that corresponds to your current audio strips
+
+You can save blender, reopen and it will remember the text associated with the audio strips for further editing
+
+Thanks for watching
+
+Let me know if you have any issues!

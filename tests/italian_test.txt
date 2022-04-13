@@ -1,0 +1,39 @@
+In questo video descriverò come funziona il componente aggiuntivo di sintesi vocale
+
+Innanzitutto, dobbiamo installare l'addon
+
+Se stai utilizzando Windows, dovrai fare clic con il pulsante destro del mouse su Blender e fare clic su Esegui come amministratore, solo questa volta
+
+Possiamo installare l'addon aprendo le preferenze in Blender e installando il file zip di sintesi vocale
+
+Potrebbe volerci un momento per installare la libreria di sintesi vocale di Google
+
+Quando accedi all'interfaccia di editing video dovresti vedere la scheda Sintesi vocale
+
+Se non viene visualizzato, puoi attivare la console di sistema per visualizzare eventuali errori in Windows
+
+In Linux puoi aprire Blender da un terminale per vedere l'output
+
+Fammi sapere se hai qualche problema
+
+Puoi creare singole strisce audio digitando qualcosa nel campo di testo e premendo speechify
+
+In alternativa puoi importare un file di sottotitoli e convertirà tutte le strisce in audio
+
+L'accento può essere scelto prima di speechify o importare file
+
+Attualmente sono supportati solo file di testo, file s.r.t e s.b.v
+
+Se vengono forniti i codici temporali, le strisce audio verranno posizionate in quel momento
+
+Nel caso di file txt, le strisce audio verranno posizionate una dopo l'altra
+
+Dopo l'importazione, puoi spostare le strisce audio, eliminarle e mixare con singole strisce audio
+
+È quindi possibile esportare file di sottotitoli e verrà esportato un file aggiornato che corrisponde alle strisce audio correnti
+
+Puoi salvare il frullatore, riaprirlo e ricorderà il testo associato alle strisce audio per ulteriori modifiche
+
+Grazie per la visione
+
+Fammi sapere se hai qualche problema!
