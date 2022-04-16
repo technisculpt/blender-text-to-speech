@@ -12,9 +12,12 @@ bl_info = {
 }
 
 from numbers import Number
-from re import T
+from re import T 
 import importlib
 import bpy
+import sys
+import os
+from pathlib import Path
 
 try:
     import pyttsx3
@@ -30,10 +33,19 @@ except ModuleNotFoundError:
     importlib.reload(install)
     install.install('pypiwin32')
 
-# Successfully installed pypiwin32-223 pywin32-303
-# mv blender_python/lib/win32/lib/pywintypes310.dll -> blender_python/lib
-# maybe mv blender_python/lib/win32/lib/pythoncom310.dll -> blender_python/lib
-# mv blender_python/_win32sysloader.cp310-win_amd64.pyd -> blender_python/lib
+    if sys.platform == "win32":
+        py_exec = str(sys.executable)
+        base = Path(py_exec).parent.parent
+        lib = os.path.join(base, "lib", "win32", "lib")
+        sys.path.append(lib) # pywintypes310.dll
+        lib = os.path.join(base, "lib", "win32")
+        sys.path.append(lib) # _win32sysloader.cp310-win_amd64.pyd
+        file1 = os.path.join(base, "lib", "pywin32_system32", "pythoncom310.dll")
+        file2 = os.path.join(base, "lib", "pywin32_system32", "pywintypes310.dll")
+        target1 = os.path.join(base, "lib", "pythoncom310.dll")
+        target2 = os.path.join(base, "lib", "pywintypes310.dll")
+        Path(file1).rename(target1)
+        Path(file2).rename(target2)
 
 from . import operators
 importlib.reload(operators)
