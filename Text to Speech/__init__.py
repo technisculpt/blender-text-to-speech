@@ -24,15 +24,27 @@ try:
 except ModuleNotFoundError:
     from . import install
     importlib.reload(install)
-    install.install('pyttsx3')
+    install.install('pyttsx3', 'pyttsx3')
 
-try:
-    import pypiwin32 # TODO choose better test for pypi lib
-except ModuleNotFoundError:
-    from . import install
-    importlib.reload(install)
-    install.install('pypiwin32')
-    install.pypiwin32_cleanup()
+if sys.platform == "win32":
+    try:
+        import pywintypes
+    except ModuleNotFoundError:
+        from .installers import windows
+        importlib.reload(windows)
+        base = Path(str(sys.executable)).parent.parent
+        test = os.path.join(base, "lib", "win32", "lib", "pythoncom310.dll")
+        if not os.path.exists(test):
+            windows.install('pypiwin32', 'pywintypes')
+            windows.pypiwin32_append_paths()
+        else:
+            windows.pypiwin32_append_paths()
+        try:
+            import pywintypes
+            print("pypiwin32 installed")
+        except ModuleNotFoundError:
+            print("Error installing pywintypes")
+    
 
 from . import operators
 importlib.reload(operators)

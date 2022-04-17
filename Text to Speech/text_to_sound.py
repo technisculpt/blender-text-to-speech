@@ -22,7 +22,7 @@ def sound_strip_from_text(context, tts, pitch, start_frame, accent_enum, audio_c
     identifier = f'{text_ident}{time.strftime("%Y%m%d%H%M%S")}'
     output_name = os.path.join(bpy.context.scene.render.filepath, identifier)
 
-    engine = pyttsx3.init(driverName="blender_tts")
+    engine = pyttsx3.init()
     engine.save_to_file(tts, output_name)
     engine.runAndWait()
     
