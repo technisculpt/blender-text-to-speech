@@ -23,4 +23,18 @@ def install(module):
     except:
         print(f"Error installing {module}")
 
-            
+def pypiwin32_cleanup():
+
+    py_exec = str(sys.executable)
+    base = Path(py_exec).parent.parent
+    print(base)
+    #lib = os.path.join(base, "lib", "win32", "lib")
+    #sys.path.append(lib)
+    #lib = os.path.join(base, "lib", "win32")
+    #sys.path.append(lib) # _win32sysloader.cp310-win_amd64.pyd
+    #file1 = os.path.join(base, "lib", "pywin32_system32", "pythoncom310.dll")
+    #file2 = os.path.join(base, "lib", "pywin32_system32", "pywintypes310.dll")
+    #target1 = os.path.join(base, "lib", "pythoncom310.dll")
+    #target2 = os.path.join(base, "lib", "pywintypes310.dll")
+    #Path(file1).rename(target1)
+    #Path(file2).rename(target2)

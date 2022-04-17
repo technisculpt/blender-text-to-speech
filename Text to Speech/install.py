@@ -24,3 +24,14 @@ def install(module):
         osx.install(module)
     else:
         other.install(module)
+
+def pypiwin32_cleanup():
+
+    if platform.startswith("linux"):
+        linux.pypiwin32_cleanup()
+    elif platform == "win32":
+        windows.pypiwin32_cleanup()
+    elif platform == "darwin":
+        osx.pypiwin32_cleanup()
+    else:
+        other.pypiwin32_cleanup()
