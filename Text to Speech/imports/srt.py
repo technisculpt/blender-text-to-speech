@@ -6,7 +6,7 @@ import bpy
 from .. import blender_time as b_time
 from .. import caption as c
 
-def import_cc(context, text, accent, pitch, language):
+def import_cc(context, text, gender, pitch, rate):
     print(".srt file detected")
     captions = []
     line_counter = 0
@@ -61,12 +61,12 @@ def import_cc(context, text, accent, pitch, language):
 
         else: # len(line == 0) equivalent of '\n'
             if len(cc_text) > 0:
-                captions.append(c.Caption(context, cc_type, cc_name, cc_text, start_time, end_time, accent, 1, pitch, language))
+                captions.append(c.Caption(context, cc_type, cc_name, cc_text, start_time, end_time, gender, 1, pitch, rate))
                 cc_text = ""
 
         line_counter += 1
         if line_counter == len(text): # on exit
             if len(cc_text) > 0:
-                captions.append(c.Caption(context, cc_type, cc_name, cc_text, start_time, end_time, accent, 1, pitch, language))
+                captions.append(c.Caption(context, cc_type, cc_name, cc_text, start_time, end_time, gender, 1, pitch, rate))
         
     return(captions)

@@ -22,7 +22,7 @@ def import_cc(context, file):
     if header[0] == 'cc_type':
         for row in rows:
             cc_type = int(row[0])
-            accent = int(row[1])
+            gender = int(row[1])
             cc_name = row[2]
             cc_text = row[3]
             hrs_start = int(row[4])
@@ -36,9 +36,10 @@ def import_cc(context, file):
             frame_start = int(row[12])
             channel = int(row[13])
             pitch = float(row[14])
+            rate = float(row[15])
             start_time = b_time.Time(hrs_start, min_start, sec_start, ms_start)
             end_time = b_time.Time(hrs_end, min_end, sec_end, ms_end)
-            cap = c.Caption(context, cc_type, cc_name, cc_text, start_time, end_time, accent, channel, pitch)
+            cap = c.Caption(context, cc_type, cc_name, cc_text, start_time, end_time, gender, channel, pitch)
             cap.sound_strip.frame_start = frame_start
             captions.append(cap)
         

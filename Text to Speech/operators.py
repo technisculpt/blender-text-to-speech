@@ -74,12 +74,12 @@ def btts_load_handler(_scene):
             caption_meta = caption.split('|')
             filename = caption_meta[0]
             cc_type = int(caption_meta[1])
-            accent = caption_meta[2]
+            gender = caption_meta[2]
             name = caption_meta[3]
             channel = int(caption_meta[4])
             strip_text = caption_meta[5]
             pitch = caption_meta[6]
-            language = caption_meta[7]
+            rate = caption_meta[7]
             caption_strip = -1
 
             for strip in seq.sequences_all:
@@ -89,7 +89,7 @@ def btts_load_handler(_scene):
             if caption_strip != -1:
                 new_cap = c.Caption(context, cc_type, name, strip_text,
                         b_time.Time(-1, -1, -1, -1), b_time.Time(-1, -1, -1, -1),
-                        accent, channel, pitch, language, reconstruct=True)
+                        gender, channel, pitch, rate, reconstruct=True)
                 new_cap.sound_strip = caption_strip
                 new_cap.filename = filename
                 new_cap.update_timecode()
@@ -103,7 +103,7 @@ def btts_save_handler(_scene):
     string_to_save = ""
     
     for caption in global_captions:
-        string_to_save += f"{caption.sound_strip.name}|{caption.cc_type}|{caption.accent}|{caption.name}|{caption.channel}|{caption.text}|{caption.pitch}|{caption.language}`"
+        string_to_save += f"{caption.sound_strip.name}|{caption.cc_type}|{caption.gender}|{caption.name}|{caption.channel}|{caption.text}|{caption.pitch}|{caption.rate}`"
 
     bpy.context.scene.text_to_speech.persistent_string = string_to_save
 
@@ -154,12 +154,12 @@ class ClosedCaptionSet(): # translates cc files into a list of c.Captions
             
             self.captions[caption].sound_strip.select = True
             bpy.ops.transform.seq_slide(value=(frame_pointer, 0.0))
-            # TODO there is a bug here where seq_slide doesn't always move the strips by frame_pointer + 1sec
+            # TODO there is a bug here where seq_slide doesn't always move the strips by exactly frame_pointer + 1sec
             self.captions[caption].sound_strip.select = False
             frame_pointer += self.captions[caption].sound_strip.frame_duration + bpy.context.scene.render.fps
 
 
-    def __init__(self, context, text, filename, accent, pitch, language):
+    def __init__(self, context, text, filename, gender, pitch, rate):
         ext = filename[-3:len(filename)]
         self.finished = False
 
@@ -172,20 +172,20 @@ class ClosedCaptionSet(): # translates cc files into a list of c.Captions
                 self.finished = False
 
         elif ext == 'txt':
-            self.captions = txt_import.import_cc(context, text, accent, pitch, language)
+            self.captions = txt_import.import_cc(context, text, gender, pitch, rate)
             self.arrange_captions_by_time()
             self.finished = True
             
         elif ext == 'srt':
-            self.captions = srt_import.import_cc(context, text, accent, pitch, language)
+            self.captions = srt_import.import_cc(context, text, gender, pitch, rate)
             self.finished = True
 
         elif ext == 'sbv':
-            self.captions = sbv_import.import_cc(context, text, accent, pitch, language)
+            self.captions = sbv_import.import_cc(context, text, gender, pitch, rate)
             self.finished = True
 
         elif ext == 'csv':
-            self.captions = csv_import.import_cc(context, text, accent, pitch, language)
+            self.captions = csv_import.import_cc(context, text, gender, pitch, rate)
             self.finished = True
 
 class ImportClosedCapFile(Operator, ImportHelper):
@@ -210,7 +210,7 @@ class ImportClosedCapFile(Operator, ImportHelper):
             start = time.time()
             enc = codec_list.items[int(self.codec)][1]
             captions =  ClosedCaptionSet(context, f.read_text(encoding=enc).split("\n"), self.filepath,
-                tts_props.accent_enumerator, tts_props.pitch, tts_props.language_enumerator)
+                tts_props.gender_enumerator, tts_props.pitch, tts_props.rate)
             end = time.time()
             print(f"time taken: {end - start}")
             if captions.finished:
@@ -258,18 +258,6 @@ class ExportFileName(Operator, ExportHelper):
     filename_ext = ""
     
     filetype: EnumProperty(
-        name="Filetype",
-        description="Choose File Type",
-        items=(
-            ("txt", "txt", "text file"),
-            ("srt", "srt", "srt file"),
-            ("sbv", "sbv", "sbv file"),
-            ("csv", "csv", "csv file"),
-        ),
-        default="txt",
-    )
-
-    language: EnumProperty(
         name="Filetype",
         description="Choose File Type",
         items=(
