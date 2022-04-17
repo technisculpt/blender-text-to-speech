@@ -9,9 +9,9 @@ importlib.reload(tts)
 
 class Caption():
     
-    def __init__(self, context, cc_type, name, text, start_time, end_time, accent, channel, pitch, language, reconstruct=False):
+    def __init__(self, context, cc_type, name, text, start_time, end_time, gender, channel, pitch, rate, reconstruct=False):
         self.cc_type = cc_type # 0 : default, 1 : person, 2 : event
-        self.accent = accent
+        self.gender = gender
         self.name = name
         self.text = text
         self.start_time = start_time
@@ -19,15 +19,15 @@ class Caption():
         self.frame_start = start_time.time_to_frame()
         self.channel = channel
         self.pitch = pitch
-        self.language = language
+        self.rate = rate
 
         if reconstruct: # reconstructing on fileload
             self.sound_strip = ""
         else:
             if self.frame_start != -1:
-                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, self.frame_start, accent, channel, language)
+                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, self.frame_start, gender, channel, rate)
             else:
-                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, 0, accent, channel, language)
+                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, 0, gender, channel, rate)
             
 
     def update_timecode(self):

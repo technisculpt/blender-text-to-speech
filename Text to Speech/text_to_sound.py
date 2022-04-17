@@ -8,9 +8,9 @@ not_allowed = ['/']
 if platform == "win32":
     not_allowed = ['<', '>', ':', '"', '/', '\\', '|', '?', '*']
 
-def sound_strip_from_text(context, tts, pitch, start_frame, accent_enum, audio_channel, language):
+def sound_strip_from_text(context, text, pitch, start_frame, gender, audio_channel, rate):
 
-    tmp_ident = tts[0:45]
+    tmp_ident = text[0:45]
     
     text_ident = ""
     for char in tmp_ident:
@@ -23,7 +23,10 @@ def sound_strip_from_text(context, tts, pitch, start_frame, accent_enum, audio_c
     output_name = os.path.join(bpy.context.scene.render.filepath, identifier)
 
     engine = pyttsx3.init()
-    engine.save_to_file(tts, output_name)
+    voices = engine.getProperty('voices') 
+    engine.setProperty('voice', voices[int(gender)].id)
+    engine.setProperty('rate', int(rate))
+    engine.save_to_file(text, output_name)
     engine.runAndWait()
     
     _scene = context.scene

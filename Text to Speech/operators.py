@@ -130,9 +130,9 @@ class TextToSpeechOperator(bpy.types.Operator):
             global_captions.append(
                     c.Caption(context, 0, "", tts_props.string_field,
                         b_time.Time(0, 0, seconds, 0), b_time.Time(-1, -1, -1, -1),
-                        tts_props.accent_enumerator, 2,
+                        tts_props.gender_enumerator, 2,
                         tts_props.pitch,
-                        tts_props.language_enumerator
+                        tts_props.rate
                         )
                     )
             self.report({'INFO'}, "FINISHED")
