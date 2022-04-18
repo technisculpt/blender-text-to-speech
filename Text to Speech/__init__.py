@@ -26,6 +26,12 @@ except ModuleNotFoundError:
     importlib.reload(install)
     install.install('pyttsx3', 'pyttsx3')
 
+if sys.platform.startswith("linux"):
+    from .installers import linux
+    importlib.reload(linux)
+    # TODO make this only run if needed
+    linux.apt_install_deps()
+
 if sys.platform == "win32":
     try:
         import pywintypes
@@ -53,12 +59,12 @@ importlib.reload(ui)
 
 classes = (
     ui.TextToSpeechSettings,
-    ui.TextToSpeech_PT,
     operators.TextToSpeechOperator,
     operators.ImportClosedCapFile,
     operators.LoadFileButton,
     operators.ExportFileName,
     operators.ExportFileButton,
+    ui.TextToSpeech_PT,
     )
 
 def register_handlers():

@@ -1,4 +1,5 @@
 import bpy
+from sys import platform
 
 class TextToSpeechSettings(bpy.types.PropertyGroup):
     persistent_string : bpy.props.StringProperty(name='Persistent String')
@@ -36,9 +37,10 @@ class TextToSpeech_PT(bpy.types.Panel):
         layout = self.layout
         scene = context.scene.text_to_speech
 
-        col = layout.column(align=True)
-        col.use_property_split = True
-        col.prop(scene, 'gender_enumerator', text='Gender')
+        if not platform.startswith("linux"):
+            col = layout.column(align=True)
+            col.use_property_split = True
+            col.prop(scene, 'gender_enumerator', text='Gender')
 
         col = layout.column(align=True)
         col.use_property_split = True
@@ -55,9 +57,12 @@ class TextToSpeech_PT(bpy.types.Panel):
         col.operator('text_to_speech.speak', text = 'Speechify', icon='ADD')
 
         col = layout.column()
-        layout.operator('text_to_speech.load', text = 'Load Captions File',  icon='IMPORT')
+        col.use_property_split = True
+        subrow = layout.row(align=True)
+        subrow.operator('text_to_speech.load', text = 'Load Captions File', icon='IMPORT')
 
         col = layout.column()
+        col.use_property_split = True
         subrow = layout.row(align=True)
         subrow.operator('text_to_speech.export', text = 'Export Captions File', icon='EXPORT')
 
