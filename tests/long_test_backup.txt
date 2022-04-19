@@ -4,7 +4,7 @@ Firstly, we need to install the add on
 
 If you're using Windows, you will need to right click blender and click run as administrator for the first time
 
-On Windows and Mac just open Blender as per usual
+On linux and mac just open Blender as per usual
 
 We can install the add on by opening the preferences in Blender, and installing the Text to Speech zip file
 
@@ -43,4 +43,6 @@ You can save blender, reopen and it will remember the text associated with the a
 Thanks for watching
 
 Let me know if you have any issues!
+
+
 

@@ -9,7 +9,7 @@ class Time():
         self.milliseconds = milliseconds
 
     def time_to_frame(self):
-        if self.hours == -1:
+        if self.hours == -1: # txt file
             return 0
         else:
             total_seconds = ((self.hours * 3600)

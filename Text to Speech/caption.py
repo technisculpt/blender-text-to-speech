@@ -28,6 +28,8 @@ class Caption():
             else:
                 self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, 0, voice, channel, rate)
             
+        if end_time.hours == -1:
+            self.update_timecode()
 
     def update_timecode(self):
         self.start_time.frame_to_time(self.sound_strip.frame_start)
