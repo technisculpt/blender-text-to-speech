@@ -28,7 +28,7 @@ class Caption():
             else:
                 self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, 0, voice, channel, rate)
             
-        if end_time.hours == -1:
+        if end_time.hours == -1 and not reconstruct:
             self.update_timecode()
 
     def update_timecode(self):
