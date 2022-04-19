@@ -19,8 +19,7 @@
 * Windows users will need to open Blender as administrator for install only
 * May not work on OSX for Blender versions before 3.0.1
 
-# Voice options differ depending on OS:
-## Voice options:
+## Voice options differ depending on OS:
 ### Windows:
 * David - Male - English (US)
 * Zira - Female - English (US)
