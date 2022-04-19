@@ -9,7 +9,7 @@
 ### export generates new timecodes based on audio strips starting frames
 ### caption data saved to blendfile
 
-![alt text](https://github.com/technisculpt/blender-gtts/blob/main/ui_preview.png)
+![alt text](https://github.com/technisculpt/blender-text-to-speech-offline/blob/main/ui_preview.png)
 
 ### To install zip the directory "Text to Speech" and install the addon via preferences menu
 ### This addon will install gtts to your Blender python interpreter
