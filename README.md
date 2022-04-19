@@ -13,5 +13,7 @@
 
 ### To install zip the directory "Text to Speech" and install the addon via preferences menu
 ### This addon will install gtts to your Blender python interpreter
+### Linux users must open a terminal and type:
+### sudo apt install -y espeak ffmpeg libespeak1
 ### For windows users you will need to open Blender as administrator for install only, it may take a minute or two
 ### May not work on OSX for Blender versions before 3.0.1

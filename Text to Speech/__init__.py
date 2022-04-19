@@ -26,12 +26,6 @@ except ModuleNotFoundError:
     importlib.reload(install)
     install.install('pyttsx3', 'pyttsx3')
 
-if sys.platform.startswith("linux"):
-    from .installers import linux
-    importlib.reload(linux)
-    # TODO make this only run if needed
-    linux.apt_install_deps()
-
 if sys.platform == "win32":
     try:
         import pywintypes

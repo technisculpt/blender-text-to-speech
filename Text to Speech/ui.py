@@ -12,7 +12,7 @@ class TextToSpeechSettings(bpy.types.PropertyGroup):
         voice_enumerator : bpy.props.EnumProperty(
                     name = "",
                     description = "gender options",
-                    items= osx.voices_linux)
+                    items= osx.voices)
 
     elif platform == "linux":
         from .voices import linux
@@ -20,7 +20,7 @@ class TextToSpeechSettings(bpy.types.PropertyGroup):
         voice_enumerator : bpy.props.EnumProperty(
             name = "",
             description = "gender options",
-            items= linux.voices_linux)
+            items= linux.voices)
 
     else:
         voice_enumerator : bpy.props.EnumProperty(

@@ -1,4 +1,4 @@
-voices_linux = [('10', 'Default - Male', ''),
+voices = [('10', 'Default - Male', ''),
 ('11', 'English - Male', ''),
 ('0', 'Afrikaans - Male', ''),
 ('1', 'Aragonese - Male', ''),
