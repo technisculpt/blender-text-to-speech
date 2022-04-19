@@ -1,5 +1,5 @@
-voices = [('17', 'Karen - Female - English (Australia)', ''),
-('0', 'Alex - Male - English (United States)', ''),
+voices = [('0', 'Alex - Male - English (United States)', ''),
+('17', 'Karen - Female - English (Australia)', ''),
 ('1', 'Alice - Female - italiano (Italia)', ''),
 ('2', 'Alva - Female - svenska (Sverige)', ''),
 ('3', 'Amelie - Female - français (Canada)', ''),

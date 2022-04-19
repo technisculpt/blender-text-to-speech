@@ -13,5 +13,6 @@ for index, lang in enumerate(langs):
     voice = l[0].split('=')[1]
     gender = l[3].split('=')[1]
     if gender == 'None':
-        gender = ''
-    print(f"('{index}', '{voice.capitalize()} - {gender.capitalize()}', ''),")
+        gender = 'Male'
+    #print(f"('{index}', '{voice.capitalize()} - {gender.capitalize()}', ''),")
+    print(f"* {voice.capitalize()} - {gender.capitalize()}")
