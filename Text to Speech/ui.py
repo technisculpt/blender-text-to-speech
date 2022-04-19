@@ -1,3 +1,4 @@
+from webbrowser import MacOSX
 import bpy
 from sys import platform
 
@@ -5,11 +6,18 @@ class TextToSpeechSettings(bpy.types.PropertyGroup):
     persistent_string : bpy.props.StringProperty(name='Persistent String')
     string_field : bpy.props.StringProperty(name='Text')
 
-    gender_enumerator : bpy.props.EnumProperty(
-                name = "",
-                description = "gender options",
-                items=[ ('0',"Male",""),
-                        ('1',"Female","")])
+    if platform == "darwin":
+        gender_enumerator : bpy.props.EnumProperty(
+                    name = "",
+                    description = "gender options",
+                    items=[ ('0',"Male",""),
+                            ('1',"Female","")])
+    else:
+        gender_enumerator : bpy.props.EnumProperty(
+            name = "",
+            description = "gender options",
+            items=[ ('11',"Male",""),
+                    ('17',"Female","")])
 
     pitch : bpy.props.FloatProperty(
         name="Pitch",

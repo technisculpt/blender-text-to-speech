@@ -26,8 +26,20 @@ def install(module):
     except:
         print(f"Error installing {module}")
 
+def test():
+    import pyttsx3
+    import os
+    text = "test"
+    output_name = os.path.join(bpy.context.scene.render.filepath, text + ".wav")
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices') 
+    engine.setProperty('voice', voices[11].id)
+    engine.setProperty('rate', 200)
+    engine.save_to_file(text, output_name)
+    engine.runAndWait()
+
 if __name__ == "__main__":
     # cd /Applications/Blender.app/Content/MacOs
     # ./Blender -b -P script.py
     # Applications/Blender.app/Contents/Recourses/2.83/python
-    install()
+    install('pyttsx3')
