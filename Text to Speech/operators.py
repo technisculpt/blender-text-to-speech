@@ -74,12 +74,12 @@ def btts_load_handler(_scene):
             caption_meta = caption.split('|')
             filename = caption_meta[0]
             cc_type = int(caption_meta[1])
-            gender = caption_meta[2]
+            voice = int(caption_meta[2])
             name = caption_meta[3]
             channel = int(caption_meta[4])
             strip_text = caption_meta[5]
-            pitch = caption_meta[6]
-            rate = caption_meta[7]
+            pitch = float(caption_meta[6])
+            rate = int(caption_meta[7])
             caption_strip = -1
 
             for strip in seq.sequences_all:
@@ -89,7 +89,7 @@ def btts_load_handler(_scene):
             if caption_strip != -1:
                 new_cap = c.Caption(context, cc_type, name, strip_text,
                         b_time.Time(-1, -1, -1, -1), b_time.Time(-1, -1, -1, -1),
-                        gender, channel, pitch, rate, reconstruct=True)
+                        voice, channel, pitch, rate, reconstruct=True)
                 new_cap.sound_strip = caption_strip
                 new_cap.filename = filename
                 new_cap.update_timecode()
@@ -103,7 +103,7 @@ def btts_save_handler(_scene):
     string_to_save = ""
     
     for caption in global_captions:
-        string_to_save += f"{caption.sound_strip.name}|{caption.cc_type}|{caption.gender}|{caption.name}|{caption.channel}|{caption.text}|{caption.pitch}|{caption.rate}`"
+        string_to_save += f"{caption.sound_strip.name}|{caption.cc_type}|{caption.voice}|{caption.name}|{caption.channel}|{caption.text}|{caption.pitch}|{caption.rate}`"
 
     bpy.context.scene.text_to_speech.persistent_string = string_to_save
 
@@ -126,7 +126,7 @@ class TextToSpeechOperator(bpy.types.Operator):
             global_captions.append(
                     c.Caption(context, 0, "", tts_props.string_field,
                         b_time.Time(0, 0, seconds, 0), b_time.Time(-1, -1, -1, -1),
-                        tts_props.gender_enumerator, 2,
+                        tts_props.voice_enumerator, 2,
                         tts_props.pitch,
                         tts_props.rate
                         )
@@ -202,13 +202,9 @@ class ImportClosedCapFile(Operator, ImportHelper):
 
 
         if f.exists():
-            import time
-            start = time.time()
             enc = codec_list.items[int(self.codec)][1]
             captions =  ClosedCaptionSet(context, f.read_text(encoding=enc).split("\n"), self.filepath,
-                tts_props.gender_enumerator, tts_props.pitch, tts_props.rate)
-            end = time.time()
-            print(f"time taken: {end - start}")
+                tts_props.voice_enumerator, tts_props.pitch, tts_props.rate)
             if captions.finished:
                 global_captions += captions.get()
                 return {'FINISHED'}

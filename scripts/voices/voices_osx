@@ -1,0 +1,288 @@
+0
+<Voice id=com.apple.speech.synthesis.voice.Alex
+          name=Alex
+          languages=['en_US']
+          gender=VoiceGenderMale
+          age=35>
+1
+<Voice id=com.apple.speech.synthesis.voice.alice
+          name=Alice
+          languages=['it_IT']
+          gender=VoiceGenderFemale
+          age=35>
+2
+<Voice id=com.apple.speech.synthesis.voice.alva
+          name=Alva
+          languages=['sv_SE']
+          gender=VoiceGenderFemale
+          age=35>
+3
+<Voice id=com.apple.speech.synthesis.voice.amelie
+          name=Amelie
+          languages=['fr_CA']
+          gender=VoiceGenderFemale
+          age=35>
+4
+<Voice id=com.apple.speech.synthesis.voice.anna
+          name=Anna
+          languages=['de_DE']
+          gender=VoiceGenderFemale
+          age=35>
+5
+<Voice id=com.apple.speech.synthesis.voice.carmit
+          name=Carmit
+          languages=['he_IL']
+          gender=VoiceGenderFemale
+          age=35>
+6
+<Voice id=com.apple.speech.synthesis.voice.damayanti
+          name=Damayanti
+          languages=['id_ID']
+          gender=VoiceGenderFemale
+          age=35>
+7
+<Voice id=com.apple.speech.synthesis.voice.daniel
+          name=Daniel
+          languages=['en_GB']
+          gender=VoiceGenderMale
+          age=35>
+8
+<Voice id=com.apple.speech.synthesis.voice.diego
+          name=Diego
+          languages=['es_AR']
+          gender=VoiceGenderMale
+          age=35>
+9
+<Voice id=com.apple.speech.synthesis.voice.ellen
+          name=Ellen
+          languages=['nl_BE']
+          gender=VoiceGenderFemale
+          age=35>
+10
+<Voice id=com.apple.speech.synthesis.voice.fiona
+          name=Fiona
+          languages=['en-scotland']
+          gender=VoiceGenderFemale
+          age=35>
+11
+<Voice id=com.apple.speech.synthesis.voice.Fred
+          name=Fred
+          languages=['en_US']
+          gender=VoiceGenderMale
+          age=30>
+12
+<Voice id=com.apple.speech.synthesis.voice.ioana
+          name=Ioana
+          languages=['ro_RO']
+          gender=VoiceGenderFemale
+          age=35>
+13
+<Voice id=com.apple.speech.synthesis.voice.joana
+          name=Joana
+          languages=['pt_PT']
+          gender=VoiceGenderFemale
+          age=35>
+14
+<Voice id=com.apple.speech.synthesis.voice.jorge
+          name=Jorge
+          languages=['es_ES']
+          gender=VoiceGenderMale
+          age=35>
+15
+<Voice id=com.apple.speech.synthesis.voice.juan
+          name=Juan
+          languages=['es_MX']
+          gender=VoiceGenderMale
+          age=35>
+16
+<Voice id=com.apple.speech.synthesis.voice.kanya
+          name=Kanya
+          languages=['th_TH']
+          gender=VoiceGenderFemale
+          age=35>
+17
+<Voice id=com.apple.speech.synthesis.voice.karen
+          name=Karen
+          languages=['en_AU']
+          gender=VoiceGenderFemale
+          age=35>
+18
+<Voice id=com.apple.speech.synthesis.voice.kyoko
+          name=Kyoko
+          languages=['ja_JP']
+          gender=VoiceGenderFemale
+          age=35>
+19
+<Voice id=com.apple.speech.synthesis.voice.laura
+          name=Laura
+          languages=['sk_SK']
+          gender=VoiceGenderFemale
+          age=35>
+20
+<Voice id=com.apple.speech.synthesis.voice.lekha
+          name=Lekha
+          languages=['hi_IN']
+          gender=VoiceGenderFemale
+          age=35>
+21
+<Voice id=com.apple.speech.synthesis.voice.luca
+          name=Luca
+          languages=['it_IT']
+          gender=VoiceGenderMale
+          age=35>
+22
+<Voice id=com.apple.speech.synthesis.voice.luciana
+          name=Luciana
+          languages=['pt_BR']
+          gender=VoiceGenderFemale
+          age=35>
+23
+<Voice id=com.apple.speech.synthesis.voice.maged
+          name=Maged
+          languages=['ar_SA']
+          gender=VoiceGenderMale
+          age=35>
+24
+<Voice id=com.apple.speech.synthesis.voice.mariska
+          name=Mariska
+          languages=['hu_HU']
+          gender=VoiceGenderFemale
+          age=35>
+25
+<Voice id=com.apple.speech.synthesis.voice.mei-jia
+          name=Mei-Jia
+          languages=['zh_TW']
+          gender=VoiceGenderFemale
+          age=35>
+26
+<Voice id=com.apple.speech.synthesis.voice.melina
+          name=Melina
+          languages=['el_GR']
+          gender=VoiceGenderFemale
+          age=35>
+27
+<Voice id=com.apple.speech.synthesis.voice.milena
+          name=Milena
+          languages=['ru_RU']
+          gender=VoiceGenderFemale
+          age=35>
+28
+<Voice id=com.apple.speech.synthesis.voice.moira
+          name=Moira
+          languages=['en_IE']
+          gender=VoiceGenderFemale
+          age=35>
+29
+<Voice id=com.apple.speech.synthesis.voice.monica
+          name=Monica
+          languages=['es_ES']
+          gender=VoiceGenderFemale
+          age=35>
+30
+<Voice id=com.apple.speech.synthesis.voice.nora
+          name=Nora
+          languages=['nb_NO']
+          gender=VoiceGenderFemale
+          age=35>
+31
+<Voice id=com.apple.speech.synthesis.voice.paulina
+          name=Paulina
+          languages=['es_MX']
+          gender=VoiceGenderFemale
+          age=35>
+32
+<Voice id=com.apple.speech.synthesis.voice.rishi
+          name=Rishi
+          languages=['en_IN']
+          gender=VoiceGenderMale
+          age=35>
+33
+<Voice id=com.apple.speech.synthesis.voice.samantha
+          name=Samantha
+          languages=['en_US']
+          gender=VoiceGenderFemale
+          age=35>
+34
+<Voice id=com.apple.speech.synthesis.voice.sara
+          name=Sara
+          languages=['da_DK']
+          gender=VoiceGenderFemale
+          age=35>
+35
+<Voice id=com.apple.speech.synthesis.voice.satu
+          name=Satu
+          languages=['fi_FI']
+          gender=VoiceGenderFemale
+          age=35>
+36
+<Voice id=com.apple.speech.synthesis.voice.sin-ji
+          name=Sin-ji
+          languages=['zh_HK']
+          gender=VoiceGenderFemale
+          age=35>
+37
+<Voice id=com.apple.speech.synthesis.voice.tessa
+          name=Tessa
+          languages=['en_ZA']
+          gender=VoiceGenderFemale
+          age=35>
+38
+<Voice id=com.apple.speech.synthesis.voice.thomas
+          name=Thomas
+          languages=['fr_FR']
+          gender=VoiceGenderMale
+          age=35>
+39
+<Voice id=com.apple.speech.synthesis.voice.ting-ting
+          name=Ting-Ting
+          languages=['zh_CN']
+          gender=VoiceGenderFemale
+          age=35>
+40
+<Voice id=com.apple.speech.synthesis.voice.veena
+          name=Veena
+          languages=['en_IN']
+          gender=VoiceGenderFemale
+          age=35>
+41
+<Voice id=com.apple.speech.synthesis.voice.Victoria
+          name=Victoria
+          languages=['en_US']
+          gender=VoiceGenderFemale
+          age=35>
+42
+<Voice id=com.apple.speech.synthesis.voice.xander
+          name=Xander
+          languages=['nl_NL']
+          gender=VoiceGenderMale
+          age=35>
+43
+<Voice id=com.apple.speech.synthesis.voice.yelda
+          name=Yelda
+          languages=['tr_TR']
+          gender=VoiceGenderFemale
+          age=35>
+44
+<Voice id=com.apple.speech.synthesis.voice.yuna
+          name=Yuna
+          languages=['ko_KR']
+          gender=VoiceGenderFemale
+          age=35>
+45
+<Voice id=com.apple.speech.synthesis.voice.yuri
+          name=Yuri
+          languages=['ru_RU']
+          gender=VoiceGenderMale
+          age=35>
+46
+<Voice id=com.apple.speech.synthesis.voice.zosia
+          name=Zosia
+          languages=['pl_PL']
+          gender=VoiceGenderFemale
+          age=35>
+47
+<Voice id=com.apple.speech.synthesis.voice.zuzana
+          name=Zuzana
+          languages=['cs_CZ']
+          gender=VoiceGenderFemale
+          age=35>

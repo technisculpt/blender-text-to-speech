@@ -5,11 +5,13 @@ import bpy
 from sys import platform
 import string
 
-not_allowed = ['/', '"', '\'', " "]
+not_allowed = ['/', '"', '\'']
 if platform == "win32":
     not_allowed = ['<', '>', ':', '"', '/', '\\', '|', '?', '*']
+elif platform == "linux":
+    not_allowed = ['/', '"', '\'', " "]
 
-def sound_strip_from_text(context, text, pitch, start_frame, gender, audio_channel, rate):
+def sound_strip_from_text(context, text, pitch, start_frame, voice, audio_channel, rate):
 
     tmp_ident = text[0:45]
     
@@ -21,22 +23,16 @@ def sound_strip_from_text(context, text, pitch, start_frame, gender, audio_chann
             text_ident += char
 
     time_now = time.strftime("%Y%m%d%H%M%S")
-    identifier = f"{text_ident}{time_now}.wav"
-    output_name = os.path.join(bpy.context.scene.render.filepath, identifier)
+    identifier = f"{text_ident}{time_now}"
+    output_name = os.path.join(bpy.context.scene.render.filepath, identifier + ".wav")
     engine = pyttsx3.init()
     voices = engine.getProperty('voices') 
-
-    if platform.startswith("linux"): # english
-        engine.setProperty('voice', voices[11].id)
-    else:
-        engine.setProperty('voice', voices[int(gender)].id)
-
+    engine.setProperty('voice', voices[int(voice)].id)
     engine.setProperty('rate', int(rate))
     engine.save_to_file(text, output_name)
     engine.runAndWait()
-    
+
     _scene = context.scene
-    
     if not _scene.sequence_editor:
         _scene.sequence_editor_create()
     seq = _scene.sequence_editor

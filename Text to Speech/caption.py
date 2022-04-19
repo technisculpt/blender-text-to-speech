@@ -1,5 +1,4 @@
 import importlib
-
 import bpy
 import os
 import sys
@@ -9,9 +8,9 @@ importlib.reload(tts)
 
 class Caption():
     
-    def __init__(self, context, cc_type, name, text, start_time, end_time, gender, channel, pitch, rate, reconstruct=False):
+    def __init__(self, context, cc_type, name, text, start_time, end_time, voice, channel, pitch, rate, reconstruct=False):
         self.cc_type = cc_type # 0 : default, 1 : person, 2 : event
-        self.gender = gender
+        self.voice = voice
         self.name = name
         self.text = text
         self.start_time = start_time
@@ -25,9 +24,9 @@ class Caption():
             self.sound_strip = ""
         else:
             if self.frame_start != -1:
-                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, self.frame_start, gender, channel, rate)
+                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, self.frame_start, voice, channel, rate)
             else:
-                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, 0, gender, channel, rate)
+                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, 0, voice, channel, rate)
             
 
     def update_timecode(self):

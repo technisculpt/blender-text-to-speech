@@ -1,36 +1,46 @@
-from webbrowser import MacOSX
 import bpy
 from sys import platform
+import importlib
 
 class TextToSpeechSettings(bpy.types.PropertyGroup):
     persistent_string : bpy.props.StringProperty(name='Persistent String')
     string_field : bpy.props.StringProperty(name='Text')
 
     if platform == "darwin":
-        gender_enumerator : bpy.props.EnumProperty(
+        from .voices import osx
+        importlib.reload(osx)
+        voice_enumerator : bpy.props.EnumProperty(
                     name = "",
                     description = "gender options",
-                    items=[ ('0',"Male",""),
-                            ('1',"Female","")])
-    else:
-        gender_enumerator : bpy.props.EnumProperty(
+                    items= osx.voices_linux)
+
+    elif platform == "linux":
+        from .voices import linux
+        importlib.reload(linux)
+        voice_enumerator : bpy.props.EnumProperty(
             name = "",
             description = "gender options",
-            items=[ ('11',"Male",""),
-                    ('17',"Female","")])
+            items= linux.voices_linux)
+
+    else:
+        voice_enumerator : bpy.props.EnumProperty(
+            name = "",
+            description = "gender options",
+            items=[ ('0',"David - Male - English (US)",""),
+                    ('1',"Zira - Female - English (US)","")])
 
     pitch : bpy.props.FloatProperty(
         name="Pitch",
-        description="Speechify pitch",
+        description="Text to Speech Pitch",
         default=1.0,
         min=0.1, max=10.0,
         )
 
     rate : bpy.props.IntProperty(
         name="Rate",
-        description="Speechify rate",
-        default=200,
-        min=1, max=600,
+        description="Text to Speech Rate",
+        default=140,
+        min=1, max=1000,
         )   
 
 class TextToSpeech_PT(bpy.types.Panel):
@@ -45,10 +55,9 @@ class TextToSpeech_PT(bpy.types.Panel):
         layout = self.layout
         scene = context.scene.text_to_speech
 
-        if not platform.startswith("linux"):
-            col = layout.column(align=True)
-            col.use_property_split = True
-            col.prop(scene, 'gender_enumerator', text='Gender')
+        col = layout.column(align=True)
+        col.use_property_split = True
+        col.prop(scene, 'voice_enumerator', text='Voice')
 
         col = layout.column(align=True)
         col.use_property_split = True
@@ -62,7 +71,7 @@ class TextToSpeech_PT(bpy.types.Panel):
         col = box.column(align=True)
         col.use_property_split = False
         col.prop(scene, 'string_field', text = '')
-        col.operator('text_to_speech.speak', text = 'Speechify', icon='ADD')
+        col.operator('text_to_speech.speak', text = 'Text to Speech', icon='ADD')
 
         col = layout.column()
         col.use_property_split = True
