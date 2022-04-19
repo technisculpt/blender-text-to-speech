@@ -25,4 +25,4 @@ for index, lang in enumerate(langs):
     except:
         country = code
     #print(f"('{index}', '{voice.capitalize()} - {gender.capitalize()} - {country}', ''),")
-    print(f"* {voice.capitalize()} - {gender.capitalize()} - {country}")
+    print(f"* {voice.capitalize()} - {gender.capitalize()} - {country.capitalize()}")
