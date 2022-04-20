@@ -23,11 +23,8 @@ class Caption():
         if reconstruct: # reconstructing on fileload
             self.sound_strip = ""
         else:
-            if self.frame_start != -1:
-                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, self.frame_start, voice, channel, rate)
-            else:
-                self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, 0, voice, channel, rate)
-            
+            self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, self.frame_start, voice, channel, rate)
+
         if end_time.hours == -1 and not reconstruct:
             self.update_timecode()
 
