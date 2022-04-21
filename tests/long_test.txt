@@ -26,11 +26,7 @@ Alternatively you can import a closed caption file and it will convert all the s
 
 Voice, pitch and rate can be chosen before converting text to speech
 
-Currently only text files, s.r.t and s.b.v files are supported
-
-If time codes are provided, audio strips will be placed at that time
-
-In the case of txt files, audio strips will be placed one after another
+Currently text, csv, srt and sbv files are supported
 
 After importing, you can move the audio strips around, delete them, and mix with individual audio strips
 

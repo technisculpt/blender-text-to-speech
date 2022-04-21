@@ -41,7 +41,7 @@ def remove_deleted_strips():
     context = bpy.context
     scene = context.scene
     seq = scene.sequence_editor
-    
+    bpy.ops.sequencer.refresh_all()
     for strip in seq.sequences_all:
         sound_strips.append(strip.name)
         
@@ -54,10 +54,11 @@ def remove_deleted_strips():
 
 def sort_strips_by_time():
     global global_captions
+    bpy.ops.sequencer.refresh_all()
     for caption in global_captions:
         caption.update_timecode()
     
-    global_captions.sort(key=lambda caption: caption.current_seconds, reverse=False)
+    global_captions.sort(key=lambda caption: caption.frame_start, reverse=False)
 
 @persistent
 def btts_load_handler(_scene):
@@ -121,6 +122,8 @@ class TextToSpeechOperator(bpy.types.Operator):
         if not tts_props.string_field:
             self.report({'INFO'}, "no text to convert")
             return {'FINISHED'}
+
+        # TODO change from seconds being passed to CURRENT FRAME
 
         else:
             global_captions.append(
