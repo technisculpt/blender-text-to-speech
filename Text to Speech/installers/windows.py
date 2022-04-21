@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 import sys
 import bpy
-
+import importlib
 
 def install(module, test):
     if bpy.app.version < (2, 92, 0):
@@ -16,11 +16,12 @@ def install(module, test):
         subprocess.call([py_exec, "-m", "ensurepip", "--user" ])
         subprocess.call([py_exec, "-m", "pip", "install", "--upgrade", "pip" ])
         subprocess.call([py_exec,"-m", "pip", "install", f"--target={str(lib)}", module])
-    try:
-        exec(f"import {test}")
-        print(f"{module} installed")
-    except:
-        print(f"Error installing {module}")
+    if test is not 'pywintypes':
+        try:
+            importlib.import_module(test)
+            print(f"{module} installed")
+        except:
+            print(f"Error installing {module}")
 
 def pypiwin32_append_paths():
     py_exec = str(sys.executable)

@@ -6,7 +6,7 @@ If you're using Windows, you will need to right click blender and click run as a
 
 On Windows and Mac just open Blender as per usual
 
-We can install the add on by opening the preferences in Blender, and installing the Text to Speech zip file
+We can install the add on by opening the preferences in Blender, and installing the Text to Speech zip file from the add on menu
 
 It might take a moment to install the text to speech library
 
@@ -19,8 +19,6 @@ When you navigate to the video editing interface you should see the Text to Spee
 If it doesn't appear, you can toggle the system console to see any errors in Windows
 
 In linux and mac you need to open Blender from a terminal to see any errors
-
-Let me know if you have any issues
 
 You can make individual audio strips by typing something in the text field and pressing Text to Speech
 
@@ -41,6 +39,3 @@ You can then export closed caption files and it will export an updated file that
 You can save blender, reopen and it will remember the text associated with the audio strips for further editing
 
 Thanks for watching
-
-Let me know if you have any issues!
-
