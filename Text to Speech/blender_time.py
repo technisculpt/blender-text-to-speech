@@ -20,7 +20,7 @@ class Time():
         return int(total_seconds * bpy.context.scene.render.fps)
 
     def frame_to_time(self, frames):
-        td = timedelta(seconds=(frames / bpy.context.scene.render.fps))
+        td = timedelta(seconds= frames/bpy.context.scene.render.fps)
 
         if (td.seconds/3600 >= 1):
             self.hours = int(td.seconds/3600)

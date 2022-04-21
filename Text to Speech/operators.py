@@ -123,8 +123,6 @@ class TextToSpeechOperator(bpy.types.Operator):
             self.report({'INFO'}, "no text to convert")
             return {'FINISHED'}
 
-        # TODO change from seconds being passed to CURRENT FRAME
-
         else:
             global_captions.append(
                     c.Caption(context, 0, "", tts_props.string_field,

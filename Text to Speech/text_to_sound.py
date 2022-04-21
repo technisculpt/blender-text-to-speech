@@ -40,4 +40,4 @@ def sound_strip_from_text(context, text, pitch, start_frame, voice, audio_channe
     obj = seq.sequences.new_sound(identifier, filepath=output_name, channel=audio_channel, frame_start=start_frame)
     obj.pitch = pitch
     
-    return (obj, identifier)
+    return obj, identifier
