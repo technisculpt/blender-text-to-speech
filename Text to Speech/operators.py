@@ -19,6 +19,7 @@ from .exports import txt as txt_export
 from .exports import srt as srt_export
 from .exports import sbv as sbv_export
 from .exports import csv as csv_export
+from . import debug as print_debug
 from . import codecs as codec_list
 importlib.reload(b_time)
 importlib.reload(c)
@@ -31,26 +32,40 @@ importlib.reload(srt_export)
 importlib.reload(sbv_export)
 importlib.reload(csv_export)
 importlib.reload(codec_list)
+importlib.reload(print_debug)
 
 global global_captions
 global_captions = []
 
 def remove_deleted_strips():
     global global_captions
-    sound_strips = []
+
     context = bpy.context
     scene = context.scene
     seq = scene.sequence_editor
     bpy.ops.sequencer.refresh_all()
-    for strip in seq.sequences_all:
-        sound_strips.append(strip.name)
-        
-    new_captions = []
-    for index, caption in enumerate(global_captions):
-        if caption.filename in sound_strips:
-            new_captions.append(caption)
+    
+    if not len(seq.sequences_all):
+        global_captions.clear()
 
-    global_captions = new_captions
+    it = 0
+    end = len(global_captions)
+
+    while(it < end):
+
+        found = False
+        for strip in seq.sequences_all:
+            
+            if global_captions[it].filename == strip.name:
+                found = True
+                global_captions[it].sound_strip = strip
+
+        if not found:
+            del global_captions[it]
+            end -= 1
+            it -= 1
+        else:
+            it += 1
 
 def sort_strips_by_time():
     global global_captions
@@ -59,11 +74,11 @@ def sort_strips_by_time():
         caption.update_timecode()
     
     global_captions.sort(key=lambda caption: caption.frame_start, reverse=False)
+    print_debug.print_debug(global_captions)
 
 @persistent
 def btts_load_handler(_scene):
     global global_captions
-
     if bpy.context.scene.text_to_speech.persistent_string:
         context = bpy.context
         scene = context.scene
