@@ -16,7 +16,7 @@ def install(module, test):
         subprocess.call([py_exec, "-m", "ensurepip", "--user" ])
         subprocess.call([py_exec, "-m", "pip", "install", "--upgrade", "pip" ])
         subprocess.call([py_exec,"-m", "pip", "install", f"--target={str(lib)}", module])
-    if test is not 'pywintypes':
+    if test != 'pywintypes':
         try:
             importlib.import_module(test)
             print(f"{module} installed")
