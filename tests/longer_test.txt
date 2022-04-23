@@ -1,0 +1,44 @@
+In this video i'm going to describe how the text to speech add on works
+
+Firstly, we need to install the add on
+
+If you're using Windows, you will need to right click blender and click run as administrator for the first time
+
+On Linux and Mac just open Blender as per usual
+
+We can install the add on by opening the preferences in Blender, and installing the Text to Speech zip file from the add on menu
+
+It might take a moment to install the text to speech library
+
+In linux you also need to open a terminal and copy paste the following command
+
+The command can be found in the video description
+
+When you navigate to the video editing interface you should see the Text to Speech tab
+
+If it doesn't appear, you can toggle the system console to see any errors in Windows
+
+In linux and mac you need to open Blender from a terminal to see any errors
+
+You can make individual audio strips by typing something in the text field and pressing Text to Speech
+
+Alternatively you can import a closed caption file and it will convert all the strips to audio
+
+Currently text, csv, srt and sbv files are supported
+
+voice
+
+pitch 
+
+and rate
+
+can be chosen before converting text to speech
+
+You can edit captions, move them around and add new ones
+
+caption data is saved to the blendfile
+
+You can then export closed caption files and it will export an updated file that corresponds to your current audio strips
+
+Thanks for watching!
+

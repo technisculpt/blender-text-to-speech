@@ -1,37 +1,88 @@
+1
+0:0:0,0 --> 0:0:4,625
 In this video i'm going to describe how the text to speech add on works
 
+2
+0:0:7,916 --> 0:0:11,333
 Firstly, we need to install the add on
 
+3
+0:0:11,333 --> 0:0:18,0
 If you're using Windows, you will need to right click blender and click run as administrator for the first time
 
-On Windows and Mac just open Blender as per usual
+4
+0:0:18,83 --> 0:0:22,166
+On Linux and Mac just open Blender as per usual
 
+5
+0:0:22,166 --> 0:0:30,83
 We can install the add on by opening the preferences in Blender, and installing the Text to Speech zip file from the add on menu
 
+6
+0:0:30,83 --> 0:0:34,83
 It might take a moment to install the text to speech library
 
+7
+0:0:34,83 --> 0:0:39,41
 In linux you also need to open a terminal and copy paste the following command
 
+8
+0:0:39,416 --> 0:0:42,708
 The command can be found in the video description
 
+9
+0:0:44,375 --> 0:0:49,458
 When you navigate to the video editing interface you should see the Text to Speech tab
 
+10
+0:0:50,958 --> 0:0:56,583
 If it doesn't appear, you can toggle the system console to see any errors in Windows
 
+11
+0:0:58,208 --> 0:1:3,0
 In linux and mac you need to open Blender from a terminal to see any errors
 
+12
+0:1:5,666 --> 0:1:11,875
 You can make individual audio strips by typing something in the text field and pressing Text to Speech
 
+13
+0:1:16,291 --> 0:1:22,0
 Alternatively you can import a closed caption file and it will convert all the strips to audio
 
-Voice, pitch and rate can be chosen before converting text to speech
-
+14
+0:1:23,125 --> 0:1:28,500
 Currently text, csv, srt and sbv files are supported
 
-After importing, you can move the audio strips around, delete them, and mix with individual audio strips
+15
+0:1:30,0 --> 0:1:31,333
+voice
 
+16
+0:1:31,708 --> 0:1:33,41
+pitch 
+
+17
+0:1:32,833 --> 0:1:35,0
+and rate
+
+18
+0:1:34,250 --> 0:1:37,708
+can be chosen before converting text to speech
+
+19
+0:1:38,375 --> 0:1:43,0
+You can edit captions, move them around and add new ones
+
+20
+0:1:43,250 --> 0:1:46,666
+caption data is saved to the blendfile
+
+21
+0:1:46,666 --> 0:1:54,83
 You can then export closed caption files and it will export an updated file that corresponds to your current audio strips
 
-You can save blender, reopen and it will remember the text associated with the audio strips for further editing
+22
+0:1:54,83 --> 0:1:56,166
+Thanks for watching!
 
-Thanks for watching
