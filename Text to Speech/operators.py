@@ -74,7 +74,7 @@ def sort_strips_by_time():
         caption.update_timecode()
     
     global_captions.sort(key=lambda caption: caption.frame_start, reverse=False)
-    print_debug.print_debug(global_captions)
+    #print_debug.print_debug(global_captions)
 
 @persistent
 def btts_load_handler(_scene):

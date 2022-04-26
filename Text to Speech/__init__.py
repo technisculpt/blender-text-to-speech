@@ -3,7 +3,7 @@ bl_info = {
     "description": "turns text into speech",
     "author": "Mark Lagana",
     "version": (1, 0),
-    "blender": (3, 1, 0),
+    "blender": (3, 10, 0),
     "location": "SEQUENCE_EDITOR > UI > Text to Speech",
     "warning": "",
     "doc_url": "https://github.com/technisculpt/blender-text-to-speech",

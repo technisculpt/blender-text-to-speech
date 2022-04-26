@@ -38,3 +38,13 @@ def pypiwin32_append_paths():
     if not os.path.exists(target1):
         Path(file1).rename(target1)
         Path(file2).rename(target2)
+
+def install_addon():
+    import bpy
+    path = r'C:\Users\marco\blender-text-to-speech-offline\Text to Speech.zip'
+    bpy.ops.preferences.addon_install(overwrite=True,
+                                        target='DEFAULT',
+                                        filepath=path,
+                                        filter_folder=True,
+                                        filter_python=False,
+                                        filter_glob="*.py;*.zip")
