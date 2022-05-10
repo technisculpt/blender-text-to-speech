@@ -23,7 +23,7 @@
 * Windows users will need to open Blender as administrator for install only
 * May not work on OSX for Blender versions before 3.0.1
 
-[![youtube intro video](https://i9.ytimg.com/vi_webp/dB4xzx1406I/mqdefault.webp?v=6270f489&sqp=CMDnw5MG&rs=AOn4CLD_zAfcypQ47iTNM3zULXqZ8QcDcg)](https://www.youtube.com/watch?v=dB4xzx1406I)
+[![youtube intro video](https://github.com/technisculpt/blender-text-to-speech-offline/blob/main/youtube.PNG)](https://www.youtube.com/watch?v=dB4xzx1406I)
 
 ## Voice options differ depending on OS:
 ### Windows:
