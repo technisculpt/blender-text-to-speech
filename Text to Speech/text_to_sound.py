@@ -22,7 +22,12 @@ def sound_strip_from_text(context, text, pitch, start_frame, voice, audio_channe
         else:
             text_ident += char
 
-    filepath_full = bpy.path.abspath(bpy.context.scene.render.filepath)
+    relpath = False
+    filepath_full = bpy.context.scene.render.filepath
+    if (bpy.context.scene.render.filepath[0:2] == "//"):
+        relpath = True
+        filepath_full = bpy.path.abspath(bpy.context.scene.render.filepath)
+
     time_now = time.strftime("%Y%m%d%H%M%S")
     identifier = f"{text_ident}{time_now}"
     output_name = os.path.join(filepath_full, identifier + ".aiff")
@@ -38,7 +43,11 @@ def sound_strip_from_text(context, text, pitch, start_frame, voice, audio_channe
         _scene.sequence_editor_create()
     seq = _scene.sequence_editor
 
-    obj = seq.sequences.new_sound(identifier, filepath=output_name, channel=audio_channel, frame_start=start_frame)
+    if relpath:
+        obj = seq.sequences.new_sound(identifier, filepath=bpy.path.relpath(output_name), channel=audio_channel, frame_start=start_frame)
+    else:
+        obj = seq.sequences.new_sound(identifier, output_name, channel=audio_channel, frame_start=start_frame)
+
     obj.pitch = pitch
     
     return obj, identifier
