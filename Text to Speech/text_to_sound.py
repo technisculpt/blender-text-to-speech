@@ -22,9 +22,10 @@ def sound_strip_from_text(context, text, pitch, start_frame, voice, audio_channe
         else:
             text_ident += char
 
+    filepath_full = bpy.path.abspath(bpy.context.scene.render.filepath)
     time_now = time.strftime("%Y%m%d%H%M%S")
     identifier = f"{text_ident}{time_now}"
-    output_name = os.path.join(bpy.context.scene.render.filepath, identifier + ".wav")
+    output_name = os.path.join(filepath_full, identifier + ".aiff")
     engine = pyttsx3.init()
     voices = engine.getProperty('voices') 
     engine.setProperty('voice', voices[int(voice)].id)
