@@ -1,5 +1,4 @@
 # blender-text-to-speech
-### blender wrapper for pyttsx3 (offline text to speech)
 * make audio captions quickly
 * options for pitch, rate and different voices
 * convert closed captions files to audio (.srt, .srb and .txt) audio strips placed at timecodes if provided
@@ -16,12 +15,12 @@
 
 ### Installation:
 * To install zip the directory "Text to Speech" and install the addon via preferences menu
-* This addon will install pyttsx3 to your Blender python interpreter
-* Linux users must open a terminal and type:
+* On Windows and Linux this addon will install pyttsx3 to your Blender python interpreter
+* Linux users also must open a terminal and type:
 
 ```sudo apt install -y espeak ffmpeg libespeak1```
 * Windows users will need to open Blender as administrator for install only
-* May not work on OSX for Blender versions before 3.0.1
+
 
 [![youtube intro video](https://github.com/technisculpt/blender-text-to-speech-offline/blob/main/youtube.PNG)](https://www.youtube.com/watch?v=dB4xzx1406I)
 

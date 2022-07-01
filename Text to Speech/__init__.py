@@ -19,31 +19,31 @@ import sys
 import os
 from pathlib import Path
 
-try:
-    import pyttsx3
-except ModuleNotFoundError:
-    from . import install
-    importlib.reload(install)
-    install.install('pyttsx3', 'pyttsx3')
-
-if sys.platform == "win32":
+if sys.platform != "darwin":
     try:
-        import pywintypes
+        import pyttsx3
     except ModuleNotFoundError:
-        from .installers import windows
-        importlib.reload(windows)
-        base = Path(str(sys.executable)).parent.parent
-        test = os.path.join(base, "lib", "win32", "lib", "pythoncom310.dll")
-        if not os.path.exists(test):
-            windows.install('pypiwin32', 'pywintypes')
-            windows.pypiwin32_append_paths()
-        else:
-            windows.pypiwin32_append_paths()
+        from . import install
+        importlib.reload(install)
+        install.install('pyttsx3', 'pyttsx3')
+    if sys.platform == "win32":
         try:
             import pywintypes
-            print("pypiwin32 installed")
         except ModuleNotFoundError:
-            print("Error installing pywintypes")
+            from .installers import windows
+            importlib.reload(windows)
+            base = Path(str(sys.executable)).parent.parent
+            test = os.path.join(base, "lib", "win32", "lib", "pythoncom310.dll")
+            if not os.path.exists(test):
+                windows.install('pypiwin32', 'pywintypes')
+                windows.pypiwin32_append_paths()
+            else:
+                windows.pypiwin32_append_paths()
+            try:
+                import pywintypes
+                print("pypiwin32 installed")
+            except ModuleNotFoundError:
+                print("Error installing pywintypes")
     
 
 from . import operators
