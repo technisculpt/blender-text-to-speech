@@ -1,6 +1,13 @@
-cc_type,accent,name,text,start_time_hr,start_time_min,start_time_sec,start_time_ms,end_time_hr,end_time_min,end_time_sec,end_time_ms,frame_start,channel,pitch
-1,0, ALICE,"Hi, my name is Alice Miller and this is John Brown",0,0,0,0,0,0,4,458,0,1,1.0
-1,0, JOHN,and we're the owners of Miller Bakery.,0,0,5,500,0,0,8,208,0,1,1.0
-1,0, ALICE,Today we'll be teaching you how to make our famous chocolate chip cookies!,0,0,9,166,0,0,14,666,0,1,1.0
-2,0,,intro music,0,0,15,666,0,0,17,125,0,1,1.0
-0,0,noname,"Okay, so we have all the ingredients laid out here",0,0,18,125,0,0,22,41,0,1,1.0
+cc_type,voice,name,text,start_time_hr,start_time_min,start_time_sec,start_time_ms,end_time_hr,end_time_min,end_time_sec,end_time_ms,start_frame,channel,pitch,rate
+
+1,0,  ALICE," Hi, my name is Alice Miller and this is John Brown",0,0,0,0,0,0,4,583,0,1,1.0,140
+
+1,0,  JOHN, and we're the owners of Miller Bakery.,0,0,5,583,0,0,8,583,134,1,1.0,140
+
+1,0,  ALICE, Today we'll be teaching you how to make our famous chocolate chip cookies!,0,0,9,583,0,0,14,375,230,1,1.0,140
+
+2,0,,intro music,0,0,15,375,0,0,17,291,369,1,1.0,140
+
+0,0,noname,"Okay, so we have all the ingredients laid out here",0,0,18,291,0,0,22,750,439,1,1.0,140
+
+0,0,noname,,0,0,23,750,0,0,23,791,570,1,1.0,140

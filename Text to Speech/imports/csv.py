@@ -19,11 +19,9 @@ def import_cc(context, file):
         for row in csvreader:
             if len(row) == 16:
                 rows.append(row)
-    
+
     if header[0] == 'cc_type':
-        
         for row in rows:
-            
             cc_type = int(row[0])
             voice = int(row[1])
             cc_name = row[2]
@@ -45,7 +43,7 @@ def import_cc(context, file):
             cap = c.Caption(context, cc_type, cc_name, cc_text, start_time, end_time, voice, channel, pitch, rate)
             cap.sound_strip.frame_start = frame_start
             captions.append(cap)
-        
+
         return(captions)
 
     else:

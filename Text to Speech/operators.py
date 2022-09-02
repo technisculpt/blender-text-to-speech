@@ -36,6 +36,8 @@ importlib.reload(print_debug)
 
 global global_captions
 global_captions = []
+global template_strip
+template_strip = None
 
 def remove_deleted_strips():
     global global_captions
@@ -117,6 +119,8 @@ def btts_save_handler(_scene):
     remove_deleted_strips()
     sort_strips_by_time()
     string_to_save = ""
+
+    # TODO refresh caption channel and pitch
     
     for caption in global_captions:
         string_to_save += f"{caption.sound_strip.name}|{caption.cc_type}|{caption.voice}|{caption.name}|{caption.channel}|{caption.text}|{caption.pitch}|{caption.rate}`"
@@ -142,7 +146,8 @@ class TextToSpeechOperator(bpy.types.Operator):
             global_captions.append(
                     c.Caption(context, 0, "", tts_props.string_field,
                         b_time.Time(0, 0, seconds, 0), b_time.Time(-1, -1, -1, -1),
-                        tts_props.voice_enumerator, 2,
+                        tts_props.voice_enumerator,
+                        tts_props.channel,
                         tts_props.pitch,
                         tts_props.rate
                         )
@@ -171,12 +176,14 @@ class ClosedCaptionSet(): # translates cc files into a list of c.Captions
             frame_pointer += self.captions[caption].sound_strip.frame_duration + bpy.context.scene.render.fps
 
 
-    def __init__(self, context, text, filename, gender, pitch, rate):
+    def __init__(self, context, text, filename, gender, pitch, rate, channel):
         ext = filename[-3:len(filename)]
         self.finished = False
 
         if ext == 'csv':
             self.captions = csv_import.import_cc(context, filename)
+            print(self.captions)
+            print(len(self.captions))
             if len(self.captions) > 0:
                 self.finished = True
             else:
@@ -184,21 +191,18 @@ class ClosedCaptionSet(): # translates cc files into a list of c.Captions
                 self.finished = False
 
         elif ext == 'txt':
-            self.captions = txt_import.import_cc(context, text, gender, pitch, rate)
+            self.captions = txt_import.import_cc(context, text, gender, pitch, rate, channel)
             self.arrange_captions_by_time()
             self.finished = True
             
         elif ext == 'srt':
-            self.captions = srt_import.import_cc(context, text, gender, pitch, rate)
+            self.captions = srt_import.import_cc(context, text, gender, pitch, rate, channel)
             self.finished = True
 
         elif ext == 'sbv':
-            self.captions = sbv_import.import_cc(context, text, gender, pitch, rate)
+            self.captions = sbv_import.import_cc(context, text, gender, pitch, rate, channel)
             self.finished = True
 
-        elif ext == 'csv':
-            self.captions = csv_import.import_cc(context, text, gender, pitch, rate)
-            self.finished = True
 
 class ImportClosedCapFile(Operator, ImportHelper):
     bl_idname = "_import.cc_file"
@@ -220,7 +224,7 @@ class ImportClosedCapFile(Operator, ImportHelper):
         if f.exists():
             enc = codec_list.items[int(self.codec)][1]
             captions =  ClosedCaptionSet(context, f.read_text(encoding=enc).split("\n"), self.filepath,
-                tts_props.voice_enumerator, tts_props.pitch, tts_props.rate)
+                tts_props.voice_enumerator, tts_props.pitch, tts_props.rate, tts_props.channel)
             if captions.finished:
                 global_captions += captions.get()
                 return {'FINISHED'}
@@ -290,4 +294,97 @@ class ExportFileButton(Operator):
     
     def execute(self, context):
         bpy.ops._export.cc_file('INVOKE_DEFAULT')
+        return {'FINISHED'} 
+
+class ConvertToTextStrip(Operator):
+    bl_idname = 'text_to_speech.speech_to_strip'
+    bl_label = 'convert to text strip'
+    bl_options = {'INTERNAL'}
+    bl_description = "convert selected audio captions to text strips"
+    
+    def execute(self, context):
+        global global_captions
+        global template_strip
+        selected = []
+        _scene = context.scene
+        if not _scene.sequence_editor:
+            _scene.sequence_editor_create()
+        seq = _scene.sequence_editor
+
+        tts_props = context.scene.text_to_speech
+
+        for cap in global_captions:
+
+            if cap.sound_strip.select:
+                selected.append(cap)
+                x = seq.sequences.new_effect(
+                    name=cap.text,
+                    type='TEXT',
+                    frame_start=cap.sound_strip.frame_start,
+                    frame_end=cap.sound_strip.frame_final_end,
+                    channel=tts_props.channel)
+
+                x.text = cap.text
+
+                if template_strip:
+                    x.location = template_strip.location
+                    x.align_x = template_strip.align_x
+                    x.align_y = template_strip.align_y
+                    x.alpha_mode = template_strip.alpha_mode
+                    x.blend_alpha = template_strip.blend_alpha
+                    x.blend_type = template_strip.blend_type
+                    x.use_box = template_strip.use_box
+                    x.box_color = template_strip.box_color
+                    x.box_margin = template_strip.box_margin
+                    x.color = template_strip.color
+                    x.color_multiply = template_strip.color_multiply
+                    x.color_saturation = template_strip.color_saturation
+                    x.color_tag = template_strip.color_tag
+                    x.effect_fader = template_strip.effect_fader
+                    x.font = template_strip.font
+                    x.font_size = template_strip.font_size
+                    x.shadow_color = template_strip.shadow_color
+                    x.use_bold = template_strip.use_bold
+                    x.use_cache_composite = template_strip.use_cache_composite
+                    x.use_cache_preprocessed = template_strip.use_cache_preprocessed
+                    x.use_cache_raw = template_strip.use_cache_raw
+                    x.use_default_fade = template_strip.use_default_fade
+                    x.use_deinterlace = template_strip.use_deinterlace
+                    x.use_flip_x = template_strip.use_flip_x
+                    x.use_flip_y = template_strip.use_flip_y
+                    x.use_float = template_strip.use_float
+                    x.use_italic = template_strip.use_italic
+                    x.use_linear_modifiers = template_strip.use_linear_modifiers
+                    x.use_proxy = template_strip.use_proxy
+                    x.use_reverse_frames = template_strip.use_reverse_frames
+                    x.use_shadow = template_strip.use_shadow
+                    x.wrap_width = template_strip.wrap_width
+
+        return {'FINISHED'}
+
+class CreateTemplateStrip(Operator):
+    bl_idname = 'text_to_speech.create_template'
+    bl_label = 'create template text strip'
+    bl_options = {'INTERNAL'}
+    bl_description = "create template for text strip creation"
+    
+    def execute(self, context):
+        global template_strip
+        _scene = context.scene
+        tts_props = context.scene.text_to_speech
+
+        if not _scene.sequence_editor:
+            _scene.sequence_editor_create()
+        seq = _scene.sequence_editor
+
+        f_start = bpy.context.scene.frame_current
+        f_end = f_start + bpy.context.scene.render.fps
+
+        template_strip = seq.sequences.new_effect(
+            name="Template_strip",
+            type='TEXT',
+            frame_start=f_start,
+            frame_end=f_end,
+            channel=tts_props.channel)
+
         return {'FINISHED'} 

@@ -43,6 +43,13 @@ class TextToSpeechSettings(bpy.types.PropertyGroup):
         min=1, max=1000,
         )   
 
+    channel : bpy.props.IntProperty(
+        name="Channel",
+        description="Target channel for new strips",
+        default=1,
+        min=1, max=129,
+        )   
+
 class TextToSpeech_PT(bpy.types.Panel):
     bl_space_type = 'SEQUENCE_EDITOR'
     bl_region_type = 'UI'
@@ -76,6 +83,11 @@ class TextToSpeech_PT(bpy.types.Panel):
         col = layout.column()
         col.use_property_split = True
         subrow = layout.row(align=True)
+        subrow.prop(scene, 'channel', text = 'Channel')
+
+        col = layout.column()
+        col.use_property_split = True
+        subrow = layout.row(align=True)
         subrow.operator('text_to_speech.load', text = 'Load Captions File', icon='IMPORT')
 
         col = layout.column()
@@ -83,4 +95,12 @@ class TextToSpeech_PT(bpy.types.Panel):
         subrow = layout.row(align=True)
         subrow.operator('text_to_speech.export', text = 'Export Captions File', icon='EXPORT')
 
+        col = layout.column()
+        col.use_property_split = True
+        subrow = layout.row(align=True)
+        subrow.operator('text_to_speech.create_template', text = 'Create Text Strip Template')
 
+        col = layout.column()
+        col.use_property_split = True
+        subrow = layout.row(align=True)
+        subrow.operator('text_to_speech.speech_to_strip', text = 'Convert Selected to Text Strip')

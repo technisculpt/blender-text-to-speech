@@ -58,6 +58,8 @@ classes = (
     operators.LoadFileButton,
     operators.ExportFileName,
     operators.ExportFileButton,
+    operators.ConvertToTextStrip,
+    operators.CreateTemplateStrip,
     ui.TextToSpeech_PT,
     )
 
