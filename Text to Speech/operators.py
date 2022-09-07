@@ -321,7 +321,7 @@ class ConvertToTextStrip(Operator):
         if not _scene.sequence_editor:
             _scene.sequence_editor_create()
         seq = _scene.sequence_editor
-
+        remove_deleted_strips()
         tts_props = context.scene.text_to_speech
         template_exists = check_for_template(context)
 
@@ -396,6 +396,6 @@ class CreateTemplateStrip(Operator):
             type='TEXT',
             frame_start=f_start,
             frame_end=f_end,
-            channel=tts_props.channel)
+            channel=tts_props.text_channel)
 
         return {'FINISHED'} 
