@@ -296,6 +296,17 @@ class ExportFileButton(Operator):
         bpy.ops._export.cc_file('INVOKE_DEFAULT')
         return {'FINISHED'} 
 
+def check_for_template(context):
+    _scene = context.scene
+    if not _scene.sequence_editor:
+        _scene.sequence_editor_create()
+    seq = _scene.sequence_editor
+    for strip in seq.sequences_all:
+        if strip.name == "Template_strip":
+            return True
+    return False
+
+
 class ConvertToTextStrip(Operator):
     bl_idname = 'text_to_speech.speech_to_strip'
     bl_label = 'convert to text strip'
@@ -312,9 +323,9 @@ class ConvertToTextStrip(Operator):
         seq = _scene.sequence_editor
 
         tts_props = context.scene.text_to_speech
+        template_exists = check_for_template(context)
 
         for cap in global_captions:
-
             if cap.sound_strip.select:
                 selected.append(cap)
                 x = seq.sequences.new_effect(
@@ -325,8 +336,8 @@ class ConvertToTextStrip(Operator):
                     channel=tts_props.channel)
 
                 x.text = cap.text
-
-                if template_strip:
+                
+                if template_exists:
                     x.location = template_strip.location
                     x.align_x = template_strip.align_x
                     x.align_y = template_strip.align_y
