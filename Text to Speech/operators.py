@@ -333,7 +333,7 @@ class ConvertToTextStrip(Operator):
                     type='TEXT',
                     frame_start=cap.sound_strip.frame_start,
                     frame_end=cap.sound_strip.frame_final_end,
-                    channel=tts_props.channel)
+                    channel=tts_props.text_channel)
 
                 x.text = cap.text
                 

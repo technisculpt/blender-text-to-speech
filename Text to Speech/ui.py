@@ -44,8 +44,15 @@ class TextToSpeechSettings(bpy.types.PropertyGroup):
         )   
 
     channel : bpy.props.IntProperty(
-        name="Channel",
-        description="Target channel for new strips",
+        name="Speech Channel",
+        description="Target channel for new speech strips",
+        default=2,
+        min=1, max=129,
+        )   
+
+    text_channel : bpy.props.IntProperty(
+        name="Text Channel",
+        description="Target channel for new text strips",
         default=1,
         min=1, max=129,
         )   
@@ -83,7 +90,12 @@ class TextToSpeech_PT(bpy.types.Panel):
         col = layout.column()
         col.use_property_split = True
         subrow = layout.row(align=True)
-        subrow.prop(scene, 'channel', text = 'Channel')
+        subrow.prop(scene, 'channel', text = 'Speech Channel')
+
+        col = layout.column()
+        col.use_property_split = True
+        subrow = layout.row(align=True)
+        subrow.prop(scene, 'text_channel', text = 'Text Channel')
 
         col = layout.column()
         col.use_property_split = True
