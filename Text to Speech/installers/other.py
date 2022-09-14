@@ -21,6 +21,7 @@ def install(module):
     try:
         exec(f"import {module}")
         print(f"{module} installed")
+        return True
     except:
         print(f"Error installing {module}")
-        print("Try opening Blender as Administrator")
+        return False
