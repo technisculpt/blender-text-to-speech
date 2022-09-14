@@ -16,12 +16,14 @@ def install(module, test):
         subprocess.call([py_exec, "-m", "ensurepip", "--user" ])
         subprocess.call([py_exec, "-m", "pip", "install", "--upgrade", "pip" ])
         subprocess.call([py_exec,"-m", "pip", "install", f"--target={str(lib)}", module])
-    if test != 'pywintypes':
+    if test != module:
         try:
             importlib.import_module(test)
             print(f"{module} installed")
         except:
             print(f"Error installing {module}")
+
+
 
 def pypiwin32_append_paths():
     py_exec = str(sys.executable)
@@ -38,6 +40,34 @@ def pypiwin32_append_paths():
     if not os.path.exists(target1):
         Path(file1).rename(target1)
         Path(file2).rename(target2)
+
+def append_paths():
+    try:
+        import pywintypes
+        return True
+    except ModuleNotFoundError:
+        base = Path(str(sys.executable)).parent.parent
+        test = os.path.join(base, "lib", "win32", "lib", "pythoncom310.dll")
+        if not os.path.exists(test):
+            install('pypiwin32', 'pywintypes')
+            pypiwin32_append_paths()
+        else:
+            pypiwin32_append_paths()
+        try:
+            import pywintypes
+            print("pypiwin32 installed")
+            return True
+        except ModuleNotFoundError:
+            print("Error installing pywintypes")
+            return False
+
+def install_pyttsx3():
+    try:
+        import pyttsx3
+    except ModuleNotFoundError:
+        install('pyttsx3', 'pyttsx3')
+    append_paths()
+
 
 def install_addon():
     import bpy
