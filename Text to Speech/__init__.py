@@ -34,11 +34,11 @@ if sys.platform != "darwin":
     try:
         import pyttsx3
         if sys.platform == 'win32':
-            windows.append_paths()
+            windows.check_pywintypes()
         installed = True
     except ModuleNotFoundError:
-        bpy.utils.register_class(preferences.OBJECT_OT_addon_prefs_example)
-        bpy.utils.register_class(preferences.InstallAddonPreferences)
+        bpy.utils.register_class(preferences.OBJECT_OT_install_addon)
+        bpy.utils.register_class(preferences.InitialPanel)
 
 classes = (
     ui.TextToSpeechSettings,
@@ -51,6 +51,14 @@ classes = (
     operators.CreateTemplateStrip,
     ui.TextToSpeech_PT,
     )
+
+install_classes = (
+    preferences.OBJECT_OT_install_addon,
+    preferences.InitialPanel,
+    preferences.FeedbackPanel,
+    preferences.SuccessPanel,
+    preferences.FailurePanel
+)
 
 def de_register_handlers():
     for handler in bpy.app.handlers.load_post:
@@ -87,3 +95,9 @@ def unregister():
         pass
 
     de_register_handlers()
+
+    for cls in install_classes:
+        try:
+            bpy.utils.unregister_class(cls)
+        except:
+            pass

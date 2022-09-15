@@ -41,7 +41,7 @@ def pypiwin32_append_paths():
         Path(file1).rename(target1)
         Path(file2).rename(target2)
 
-def append_paths():
+def check_pywintypes():
     try:
         import pywintypes
         return True
@@ -66,7 +66,7 @@ def install_pyttsx3():
         import pyttsx3
     except ModuleNotFoundError:
         install('pyttsx3', 'pyttsx3')
-    append_paths()
+    check_pywintypes()
 
 
 def install_addon():

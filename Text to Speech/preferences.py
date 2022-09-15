@@ -11,47 +11,55 @@ importlib.reload(install)
 importlib.reload(operators)
 importlib.reload(ui)
 
-class InstallAddonPreferences(AddonPreferences):
+class InitialPanel(AddonPreferences):
     bl_idname = __package__
+
+    password: StringProperty(
+        name="User Password:",
+        subtype='PASSWORD',
+    )
 
     def draw(self, context):
         layout = self.layout
-        layout.label(text="Installing addon may take a moment for libraries to install")
-        layout.operator('text_to_speech.addon_prefs_example', text='Install addon')
+        layout.label(text="Installing addon may take a moment for libraries to install:")
+        layout.prop(self, "password")
+        layout.operator('text_to_speech.addon_prefs_feedback', text='Install addon')
 
-class OBJECT_OT_addon_prefs_example(Operator):
-    """Display example preferences"""
-    bl_idname = "text_to_speech.addon_prefs_example"
+
+class OBJECT_OT_install_addon(Operator):
+    bl_idname = "text_to_speech.addon_prefs_feedback"
     bl_label = "Add-on Preferences Example"
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        bpy.utils.unregister_class(InstallAddonPreferences)
-        bpy.utils.register_class(InstallingFeedbackAddonPreferences)
+        addon_prefs = context.preferences.addons[__package__].preferences
+        print(addon_prefs.password)
+        bpy.utils.unregister_class(InitialPanel)
+        bpy.utils.register_class(FeedbackPanel)
         if install.install('pyttsx3'):
             register_classes()
-            bpy.utils.unregister_class(InstallingFeedbackAddonPreferences)
-            bpy.utils.register_class(SuccessFeedbackAddonPreferences)
+            bpy.utils.unregister_class(FeedbackPanel)
+            bpy.utils.register_class(SuccessPanel)
         else:
-            bpy.utils.unregister_class(InstallingFeedbackAddonPreferences)
-            bpy.utils.register_class(FailureFeedbackAddonPreferences)
+            bpy.utils.unregister_class(FeedbackPanel)
+            bpy.utils.register_class(FailurePanel)
         return {'FINISHED'}
 
-class InstallingFeedbackAddonPreferences(AddonPreferences):
+class FeedbackPanel(AddonPreferences):
     bl_idname = __package__
 
     def draw(self, context):
         layout = self.layout
         layout.label(text="Installing addon...")
 
-class SuccessFeedbackAddonPreferences(AddonPreferences):
+class SuccessPanel(AddonPreferences):
     bl_idname = __package__
 
     def draw(self, context):
         layout = self.layout
         layout.label(text="Addon successfully installed")
 
-class FailureFeedbackAddonPreferences(AddonPreferences):
+class FailurePanel(AddonPreferences):
     bl_idname = __package__
 
     def draw(self, context):
