@@ -28,14 +28,14 @@ importlib.reload(preferences)
 from .installers import windows
 importlib.reload(windows)
 
-installed = False
+libraries_installed = False
 
 if sys.platform != "darwin":
     try:
         import pyttsx3
         if sys.platform == 'win32':
             windows.check_pywintypes()
-        installed = True
+        libraries_installed = True
     except ModuleNotFoundError:
         bpy.utils.register_class(preferences.OBJECT_OT_install_addon)
         bpy.utils.register_class(preferences.InitialPanel)
@@ -49,8 +49,8 @@ classes = (
     operators.ExportFileButton,
     operators.ConvertToTextStrip,
     operators.CreateTemplateStrip,
-    ui.TextToSpeech_PT,
-    )
+    ui.TextToSpeech_PT
+)
 
 install_classes = (
     preferences.OBJECT_OT_install_addon,
@@ -75,7 +75,7 @@ def register_handlers():
     bpy.app.handlers.save_pre.append(operators.btts_save_handler)
 
 def register():
-    if sys.platform == "darwin" or installed:
+    if sys.platform == "darwin" or libraries_installed:
         for cls in classes:
             bpy.utils.register_class(cls)
 
@@ -87,12 +87,12 @@ def unregister():
         try:
             bpy.utils.unregister_class(cls)
         except:
-            pass
+            print("Couldn't unreg class: " + str(cls))
 
     try:
         del bpy.types.Scene.text_to_speech
     except:
-        pass
+        print("Couldn't unreg bpy.types.Scene.text_to_speech")
 
     de_register_handlers()
 
@@ -100,4 +100,4 @@ def unregister():
         try:
             bpy.utils.unregister_class(cls)
         except:
-            pass
+            print("Couldn't unreg install class: " + str(cls))

@@ -23,8 +23,6 @@ def install(module, test):
         except:
             print(f"Error installing {module}")
 
-
-
 def pypiwin32_append_paths():
     py_exec = str(sys.executable)
     base = Path(py_exec).parent.parent
@@ -66,7 +64,7 @@ def install_pyttsx3():
         import pyttsx3
     except ModuleNotFoundError:
         install('pyttsx3', 'pyttsx3')
-    check_pywintypes()
+        return check_pywintypes()
 
 
 def install_addon():
