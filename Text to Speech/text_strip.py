@@ -16,7 +16,7 @@ def text_strip(context, text, start_frame, end_frame, strip_channel, template_st
     new_strip = seq.sequences.new_effect(
         name=text,
         type='TEXT',
-        frame_start=start_frame,
+        frame_start=int(start_frame),
         frame_end=end_frame,
         channel=strip_channel)
 

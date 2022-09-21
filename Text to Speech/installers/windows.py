@@ -60,11 +60,8 @@ def check_pywintypes():
             return False
 
 def install_pyttsx3():
-    try:
-        import pyttsx3
-    except ModuleNotFoundError:
-        install('pyttsx3', 'pyttsx3')
-        return check_pywintypes()
+    install('pyttsx3', 'pyttsx3')
+    return check_pywintypes()
 
 
 def install_addon():
