@@ -19,7 +19,6 @@ import sys
 import os
 from pathlib import Path
 
-
 if sys.platform != "darwin":
     try:
         import pyttsx3
@@ -37,6 +36,7 @@ if sys.platform != "darwin":
         else:
             if sys.platform == 'win32':
                 print("pyttsx3 failed to install. Check Blender has been opened in administrator mode")
+                
             else:
                 print("pyttsx3 failed to install")
 
