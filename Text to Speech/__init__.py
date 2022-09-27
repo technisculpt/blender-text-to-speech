@@ -2,7 +2,7 @@ bl_info = {
     "name": "Text to Speech",
     "description": "turns text into speech",
     "author": "Mark Lagana",
-    "version": (1, 0),
+    "version": (2, 0),
     "blender": (3, 3, 0),
     "location": "SEQUENCE_EDITOR > UI > Text to Speech",
     "warning": "",
