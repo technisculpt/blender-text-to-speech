@@ -21,7 +21,7 @@ class Caption():
         self.channel = channel
         self.pitch = pitch
         self.rate = rate
-        print(reconstruct)
+
         if reconstruct: # reconstructing on fileload
             self.sound_strip = ""
         else:

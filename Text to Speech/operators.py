@@ -10,7 +10,7 @@ from bpy.app.handlers import persistent
 from bpy.props import StringProperty, EnumProperty, BoolProperty
 
 from . import blender_time as b_time
-from . import caption
+from . import caption as c
 from .imports import txt as txt_import
 from .imports import srt as srt_import
 from .imports import sbv as sbv_import
@@ -22,7 +22,7 @@ from .exports import csv as csv_export
 from . import codecs as codec_list
 from . import text_strip
 importlib.reload(b_time)
-importlib.reload(caption)
+importlib.reload(c)
 importlib.reload(txt_import)
 importlib.reload(srt_import)
 importlib.reload(sbv_import)
@@ -104,9 +104,9 @@ def btts_load_handler(_scene):
                     caption_strip = strip
 
             if caption_strip != -1:
-                new_cap = caption.Caption(context, cc_type, name, strip_text,
+                new_cap = c.Caption(context, cc_type, name, strip_text,
                         b_time.Time(-1, -1, -1, -1), b_time.Time(-1, -1, -1, -1),
-                        voice, channel, pitch, rate, reconstruct=True)
+                        voice, channel, pitch, rate, 0, True, False, reconstruct=True)
                 new_cap.sound_strip = caption_strip
                 new_cap.filename = filename
                 new_cap.update_timecode()
@@ -143,7 +143,7 @@ class TextToSpeechOperator(bpy.types.Operator):
 
         else:
             global_captions.append(
-                    caption.Caption(context, 0, "", tts_props.string_field,
+                    c.Caption(context, 0, "", tts_props.string_field,
                         b_time.Time(0, 0, seconds, 0), b_time.Time(-1, -1, -1, -1),
                         tts_props.voice_enumerator, tts_props.channel, tts_props.pitch, tts_props.rate,
                         tts_props.text_channel, True, False))
