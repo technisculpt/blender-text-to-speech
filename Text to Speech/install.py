@@ -19,7 +19,7 @@ def install(module):
     if platform.startswith("linux"):
         return linux.install(module)
     elif platform == "win32":
-        return windows.install_pyttsx3()
+        return windows.install(module)
     elif platform == "darwin":
         return osx.install(module)
     else:

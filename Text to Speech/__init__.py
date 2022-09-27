@@ -19,6 +19,20 @@ import sys
 import os
 from pathlib import Path
 
+class WindowsError(bpy.types.AddonPreferences):
+    bl_idname = __package__
+
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text="Pyttsx3 install failed. Open Blender in Administrator mode")
+
+class GenericError(bpy.types.AddonPreferences):
+    bl_idname = __package__
+
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text="Pyttsx3 install failed.")
+
 if sys.platform != "darwin":
     try:
         import pyttsx3
@@ -26,19 +40,30 @@ if sys.platform != "darwin":
             from .installers import windows
             importlib.reload(windows)
             windows.check_pywintypes()
-
     except ModuleNotFoundError:
         from . import install
         importlib.reload(install)
+
         install_result = install.install('pyttsx3')
         if install_result:
-            print("pyttsx3 successfully installed")
+            print("Pyttsx3 installed")
+            if sys.platform == 'win32':
+                try:
+                    bpy.utils.unregister_class(WindowsError)
+                except:
+                    pass
+            else:
+                try:
+                    bpy.utils.unregister_class(GenericError)
+                except:
+                    pass
         else:
             if sys.platform == 'win32':
-                print("pyttsx3 failed to install. Check Blender has been opened in administrator mode")
-                
+                print("Pyttsx3 install failed. Open Blender in Administrator mode")
+                bpy.utils.register_class(WindowsError)
             else:
-                print("pyttsx3 failed to install")
+                print("Pyttsx3 install failed.")
+                bpy.utils.register_class(GenericError)
 
 from . import operators
 importlib.reload(operators)
@@ -82,6 +107,17 @@ def register():
 def unregister():
     for cls in classes:
         bpy.utils.unregister_class(cls)
+
+    if sys.platform == 'win32':
+        try:
+            bpy.utils.unregister_class(WindowsError)
+        except:
+            pass
+    else:
+        try:
+            bpy.utils.unregister_class(GenericError)
+        except:
+            pass
 
     del bpy.types.Scene.text_to_speech
     de_register_handlers()

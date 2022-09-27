@@ -1,4 +1,7 @@
-import pyttsx3
+try:
+    import pyttsx3
+except:
+    pass
 import os
 import sys
 import time
