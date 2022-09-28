@@ -1,4 +1,7 @@
-import pyttsx3
+try:
+    import pyttsx3
+except:
+    pass
 import os
 import sys
 import time
@@ -60,6 +63,9 @@ def sound_strip_from_text(context, text, pitch, start_frame, voice, audio_channe
     else:
         obj = seq.sequences.new_sound(identifier, output_name, channel=audio_channel, frame_start=start_frame)
 
-    obj.pitch = pitch
-    
+    if bpy.app.version >= (3, 3, 0):
+        obj.speed_factor = pitch
+    else:
+        obj.pitch = pitch
+
     return obj, identifier

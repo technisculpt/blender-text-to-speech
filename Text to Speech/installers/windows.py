@@ -5,7 +5,7 @@ import sys
 import bpy
 import importlib
 
-def install(module, test):
+def install_module(module, test):
     if bpy.app.version < (2, 92, 0):
         subprocess.call([str(py_exec), "-m", "ensurepip", "--user"])
         subprocess.call([str(py_exec), "-m", "pip", "install", "--upgrade", "pip"])
@@ -16,12 +16,15 @@ def install(module, test):
         subprocess.call([py_exec, "-m", "ensurepip", "--user" ])
         subprocess.call([py_exec, "-m", "pip", "install", "--upgrade", "pip" ])
         subprocess.call([py_exec,"-m", "pip", "install", f"--target={str(lib)}", module])
-    if test != 'pywintypes':
-        try:
-            importlib.import_module(test)
-            print(f"{module} installed")
-        except:
-            print(f"Error installing {module}")
+    try:
+        importlib.import_module(test)
+        return(True)
+    except:
+        return(False)
+
+
+def install(module):
+    return install_module(module, module)
 
 def pypiwin32_append_paths():
     py_exec = str(sys.executable)
@@ -38,6 +41,23 @@ def pypiwin32_append_paths():
     if not os.path.exists(target1):
         Path(file1).rename(target1)
         Path(file2).rename(target2)
+
+def check_pywintypes():
+    try:
+        import pywintypes
+    except ModuleNotFoundError:
+        base = Path(str(sys.executable)).parent.parent
+        test = os.path.join(base, "lib", "win32", "lib", "pythoncom310.dll")
+        if not os.path.exists(test):
+            install_module('pypiwin32', 'pywintypes')
+            pypiwin32_append_paths()
+        else:
+            pypiwin32_append_paths()
+        try:
+            import pywintypes
+        except ModuleNotFoundError:
+            print("Error installing pywintypes")
+
 
 def install_addon():
     import bpy

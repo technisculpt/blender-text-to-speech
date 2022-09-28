@@ -12,15 +12,15 @@ importlib.reload(linux)
 importlib.reload(windows)
 importlib.reload(other)
 
-def install(module, test):
+def install(module):
 
     print(f"attempting {module} install on {platform} blender version {bpy.app.version}")
 
     if platform.startswith("linux"):
-        linux.install(module)
+        return linux.install(module)
     elif platform == "win32":
-        windows.install(module, test)
+        return windows.install(module)
     elif platform == "darwin":
-        osx.install(module)
+        return osx.install(module)
     else:
-        other.install(module)
+        return other.install(module)

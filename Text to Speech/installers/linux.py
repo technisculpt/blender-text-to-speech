@@ -20,8 +20,10 @@ def install(module):
     try:
         exec(f"import {module}")
         print(f"{module} installed")
+        return True
     except:
         print(f"Error installing {module}")
+        return False
 
 def apt_install_deps():
 
