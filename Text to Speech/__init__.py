@@ -27,7 +27,7 @@ class PrefsError(bpy.types.AddonPreferences):
         if sys.platform == 'win32':
             layout.label(text="Pyttsx3 install failed. Open Blender in Administrator mode")
         else:
-            layout.label(text="Pyttsx3 install failed.")
+            layout.label(text="Pyttsx3 install failed")
 
 if sys.platform != "darwin":
     try:
@@ -54,7 +54,7 @@ if sys.platform != "darwin":
                 print("Pyttsx3 install failed. Open Blender in Administrator mode")
                 
             else:
-                print("Pyttsx3 install failed.")
+                print("Pyttsx3 install failed")
 
 from . import operators
 importlib.reload(operators)
