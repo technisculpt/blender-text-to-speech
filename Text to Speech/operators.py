@@ -34,7 +34,7 @@ importlib.reload(csv_export)
 importlib.reload(codec_list)
 importlib.reload(text_strip)
 
-global global_captions
+global global_captions # TODO why is the global keyword being used in the global namespace?
 global_captions = []
 global template_strip
 template_strip = None
