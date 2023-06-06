@@ -1,7 +1,6 @@
-import os
-import sys
 from pathlib import Path
 import importlib
+import os
 
 import bpy
 from bpy.types import Operator
@@ -19,7 +18,7 @@ from .exports import txt as txt_export
 from .exports import srt as srt_export
 from .exports import sbv as sbv_export
 from .exports import csv as csv_export
-from . import codecs as codec_list
+from . import char_encoding
 from . import text_strip
 importlib.reload(b_time)
 importlib.reload(c)
@@ -31,17 +30,14 @@ importlib.reload(txt_export)
 importlib.reload(srt_export)
 importlib.reload(sbv_export)
 importlib.reload(csv_export)
-importlib.reload(codec_list)
+importlib.reload(char_encoding)
 importlib.reload(text_strip)
 
-global global_captions # TODO why is the global keyword being used in the global namespace?
 global_captions = []
-global template_strip
 template_strip = None
 
 def remove_deleted_strips():
     global global_captions
-
     context = bpy.context
     scene = context.scene
     seq = scene.sequence_editor
@@ -57,7 +53,6 @@ def remove_deleted_strips():
 
         found = False
         for strip in seq.sequences_all:
-            
             if global_captions[it].filename == strip.name:
                 found = True
                 global_captions[it].sound_strip = strip
@@ -119,12 +114,20 @@ def btts_save_handler(_scene):
     sort_strips_by_time()
     string_to_save = ""
 
-    # TODO refresh caption channel and pitch
-    
     for caption in global_captions:
         string_to_save += f"{caption.sound_strip.name}|{caption.cc_type}|{caption.voice}|{caption.name}|{caption.channel}|{caption.text}|{caption.pitch}|{caption.rate}`"
 
     bpy.context.scene.text_to_speech.persistent_string = string_to_save
+
+
+def check_output_dir()->bool:
+    relpath = False
+    filepath_full = bpy.context.scene.render.filepath
+    if (bpy.context.scene.render.filepath[0:2] == "//"):
+        relpath = True
+        filepath_full = bpy.path.abspath(bpy.context.scene.render.filepath)
+
+    return not os.path.exists(filepath_full)
 
 class TextToSpeechOperator(bpy.types.Operator):
     bl_idname = 'text_to_speech.speak'
@@ -133,6 +136,11 @@ class TextToSpeechOperator(bpy.types.Operator):
     bl_description = "turns text into audio strip at current playhead"
 
     def execute(self, context):
+
+        if check_output_dir():
+            self.report({'INFO'}, "Output path doesn't exist")
+            return {'CANCELLED'}
+        
         global global_captions
         seconds = bpy.context.scene.frame_current / bpy.context.scene.render.fps
         tts_props = context.scene.text_to_speech
@@ -147,7 +155,6 @@ class TextToSpeechOperator(bpy.types.Operator):
                         b_time.Time(0, 0, seconds, 0), b_time.Time(-1, -1, -1, -1),
                         tts_props.voice_enumerator, tts_props.channel, tts_props.pitch, tts_props.rate,
                         tts_props.text_channel, True, False))
-
             self.report({'INFO'}, "FINISHED")
             return {'FINISHED'}
 
@@ -169,7 +176,7 @@ class ClosedCaptionSet(): # translates cc files into a list of caption.Captions
             if with_text:
                 self.text_caps[caption].select = True
             bpy.ops.transform.seq_slide(value=(frame_pointer, 0.0))
-            # TODO there is a bug here where seq_slide doesn't always move the strips by exactly frame_pointer + 1sec
+            # TODO there is a minor bug here where seq_slide doesn't always move the strips by exactly frame_pointer + 1sec
             self.captions[caption].sound_strip.select = False
             if with_text:
                 self.text_caps[caption].select = False
@@ -181,8 +188,6 @@ class ClosedCaptionSet(): # translates cc files into a list of caption.Captions
 
         if ext == 'csv':
             self.captions = csv_import.import_cc(context, filename)
-            print(self.captions)
-            print(len(self.captions))
             if len(self.captions) > 0:
                 self.finished = True
             else:
@@ -218,7 +223,7 @@ class ImportClosedCapFile(Operator, ImportHelper):
     codec: EnumProperty(
         name="File Encoding",
         description="Choose File Encoding",
-        items = codec_list.items,
+        items = char_encoding.items,
         default='95')
 
     tts_flag : bpy.props.BoolProperty(
@@ -232,12 +237,13 @@ class ImportClosedCapFile(Operator, ImportHelper):
         default=False)
 
     def execute(self, context):
+
         global global_captions
         f = Path(bpy.path.abspath(self.filepath))
         tts_props = context.scene.text_to_speech
 
         if f.exists():
-            enc = codec_list.items[int(self.codec)][1]
+            enc = char_encoding.items[int(self.codec)][1]
             captions =  ClosedCaptionSet(context, f.read_text(encoding=enc).split("\n"), self.filepath,
                                         tts_props.voice_enumerator, tts_props.pitch, tts_props.rate,
                                         tts_props.channel, tts_props.text_channel, self.tts_flag, self.text_strip_flag)
@@ -254,8 +260,12 @@ class LoadFileButton(Operator):
     bl_label = 'load op'
     bl_options = {'INTERNAL'}
     bl_description = "loads closed captions from txt, srt or sbv file"
-
+    
     def execute(self, context):
+        if check_output_dir():
+            self.report({'INFO'}, "Output path doesn't exist")
+            return {'CANCELLED'}
+        
         bpy.ops._import.cc_file('INVOKE_DEFAULT')
         return {'FINISHED'}
 
@@ -294,7 +304,6 @@ class ExportFileName(Operator, ExportHelper):
     )
   
     def execute(self, context):
-
         if export_cc_file(context, self.filepath, self.filetype):
             return {'FINISHED'}
 
@@ -319,6 +328,11 @@ class ConvertToTextStrip(Operator):
     bl_description = "convert selected audio captions to text strips"
     
     def execute(self, context):
+
+        if check_output_dir():
+            self.report({'INFO'}, "Output path doesn't exist")
+            return {'CANCELLED'}
+
         global global_captions
         global template_strip
 
@@ -340,6 +354,11 @@ class CreateTemplateStrip(Operator):
     bl_description = "create template for text strip creation"
     
     def execute(self, context):
+
+        if check_output_dir():
+            self.report({'INFO'}, "Output path doesn't exist")
+            return {'CANCELLED'}
+        
         global template_strip
         _scene = context.scene
         tts_props = context.scene.text_to_speech

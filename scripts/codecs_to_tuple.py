@@ -1,4 +1,3 @@
-#!"C:\Users\marco\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\python.exe"
 # to parse from table at https://docs.python.org/3/library/codecs.html
 
 import sys

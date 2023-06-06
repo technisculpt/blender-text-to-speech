@@ -1,8 +1,8 @@
 $Src = "Text to Speech"
 $Zipped = "Text to Speech.zip"
-$Addon = "C:\Users\marco\AppData\Roaming\Blender Foundation\Blender\3.1\scripts\addons\Text to Speech"
+$Addon = "C:\Users\mlaga\AppData\Roaming\Blender Foundation\Blender\3.5\scripts\addons"
 
-Set-Location -Path "C:\Users\marco\blender-text-to-speech-offline"
+Set-Location -Path "C:\Users\mlaga\code\blender-text-to-speech"
 
 if (Test-Path $Zipped) 
 {
