@@ -21,16 +21,12 @@ class Caption():
         self.channel = channel
         self.pitch = pitch
         self.rate = rate
-        self.badpath = False
 
         if reconstruct: # reconstructing on fileload
             self.sound_strip = ""
         else:
             if tts_flag:
                 self.sound_strip, self.filename = tts.sound_strip_from_text(context, text, pitch, self.frame_start, voice, channel, rate)
-            if self.sound_strip == 'badpath':
-                self.badpath = True
-                exit()
             if text_flag:
                 template = text_strip.check_for_template(context)
                 if tts_flag:
