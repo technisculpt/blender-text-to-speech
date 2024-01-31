@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 from sys import platform
 import subprocess
