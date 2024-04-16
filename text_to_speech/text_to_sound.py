@@ -48,21 +48,21 @@ def sanitize_filename(s):
 
     return f"{s}_{time.strftime('%H%M%S')}.aiff"
 
-
+# TODO make these all keyword arguments, reduce length of name maybe new_strip i.e text_to_sound.new_strip()
 def sound_strip_from_text(context, text, pitch, start_frame, voice, audio_channel, rate):
     relpath = False
-    filepath_full = bpy.context.scene.render.filepath
-    if (bpy.context.scene.render.filepath[0:2] == "//"):
+    file_path = bpy.context.scene.render.filepath
+    if (file_path[0:2] == "//"):
         relpath = True
-        filepath_full = bpy.path.abspath(bpy.context.scene.render.filepath)
+        file_path = bpy.path.abspath(bpy.context.scene.render.filepath)
 
-    filename = sanitize_filename(text)
-    output_name = os.path.join(filepath_full, filename)
+    b_ID = sanitize_filename(text)
+    output_file = os.path.join(file_path, b_ID)
 
-    if sys.platform == "darwin":
-        mac_engine(text, voice, rate, output_name)
+    if platform == "darwin":
+        mac_engine(text, voice, rate, output_file)
     else:
-        engine(text, voice, rate, output_name)
+        engine(text, voice, rate, output_file)
 
     _scene = context.scene
     if not _scene.sequence_editor:
@@ -70,16 +70,22 @@ def sound_strip_from_text(context, text, pitch, start_frame, voice, audio_channe
     seq = _scene.sequence_editor
 
     if relpath:
-        obj = seq.sequences.new_sound(filename, filepath=bpy.path.relpath(output_name), channel=audio_channel, frame_start=start_frame)
+        b_obj = seq.sequences.new_sound(b_ID, filepath=bpy.path.relpath(output_file), channel=audio_channel, frame_start=start_frame)
     else:
-        obj = seq.sequences.new_sound(filename, output_name, channel=audio_channel, frame_start=start_frame)
+        b_obj = seq.sequences.new_sound(b_ID, output_file, channel=audio_channel, frame_start=start_frame)
 
-    if bpy.app.version >= (3, 3, 0):
-        obj.speed_factor = pitch
+    # set pitch for 3 different implementations (it's sounding amazing in 4.x.x)
+    if bpy.app.version >= (4, 0, 0):
+        bpy.ops.sequencer.select_all(action='DESELECT')
+        b_obj.select = True
+        bpy.context.scene.sequence_editor.active_strip = b_obj
+        bpy.ops.sequencer.retiming_segment_speed_set(speed=pitch, keep_retiming=True)
+    elif bpy.app.version >= (3, 3, 0):
+        b_obj.speed_factor = pitch
     else:
-        obj.pitch = pitch
+        b_obj.pitch = pitch
 
-    return obj, filename
+    return b_obj, b_ID
 
 def test_sanitize_filename():
     tests = [

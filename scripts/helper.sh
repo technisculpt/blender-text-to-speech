@@ -4,8 +4,8 @@ set -Eeuo pipefail
 
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
-SRC="Text to Speech"
-ZIPPED=$script_dir"/Text to Speech.zip"
+SRC="text_to_speech"
+ZIPPED=$script_dir"/text_to_speech.zip"
 ADDON_DIR="/home/$USER/.config/blender"
 
 if [ -f "$ZIPPED" ]; then

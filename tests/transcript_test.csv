@@ -1,4 +1,5 @@
-cc_type,voice,name,text,start_time_hr,start_time_min,start_time_sec,start_time_ms,end_time_hr,end_time_min,end_time_sec,end_time_ms,start_frame,channel,pitch,rate
+cc_type,voice,name,text,start_time_hr,start_time_min,start_time_sec,
+start_time_ms,end_time_hr,end_time_min,end_time_sec,end_time_ms,start_frame,channel,pitch,rate
 
 1,0,  ALICE," Hi, my name is Alice Miller and this is John Brown",0,0,0,0,0,0,4,583,0,1,1.0,140
 

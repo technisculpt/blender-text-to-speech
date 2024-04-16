@@ -1,0 +1,16 @@
+# In Blenders python API some things are done differently than in regular python. for example;
+#
+#     In python it's not allowed to have conditional logic in a class definition, but Blender's API
+#     allows it when inheriting bpy.types.PropertyGroup, as class attributes don't act as python class attributes
+#     but instead are used for creating properties and UI in the blend file. Similarly method calling is allowed in the class definition
+#     which is not allowed in regular python. This is common with Blender for instance with bpy.types.Operator
+#
+# this file suppresses the warnings from above examples in certain files beacuse I is for if you use visual studio code and pylance the warnings
+# are being suppressed by pyproject.toml in the root of the repo/vscode project (the parent of this file/python package)
+#
+# if it's too dangerous to lose the warnings you can just place  # type: ignore on the same line as a class definition to ignore that particular warning
+
+
+[tool.pyright]
+ignore = ["text_to_speech/ui.py"]
+

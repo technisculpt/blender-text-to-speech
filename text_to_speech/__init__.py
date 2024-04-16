@@ -1,9 +1,9 @@
 bl_info = {
-    "name": "Text to Speech",
-    "description": "turns text into speech",
+    "name": "text_to_speech",
+    "description": "offline text into speech, coversion of closed caption files to voice strips, text strips, and edited voice strips exportable back to closed caption files",
     "author": "Mark Lagana",
     "version": (2, 1),
-    "blender": (2, 92, 0), # tested up to 3.5.1
+    "blender": (2, 92, 0), # tested up to 4.2.0
     "location": "SEQUENCE_EDITOR > UI > Text to Speech",
     "warning": "",
     "doc_url": "https://github.com/technisculpt/blender-text-to-speech",
@@ -31,7 +31,7 @@ class PrefsError(bpy.types.AddonPreferences):
 
 if sys.platform != "darwin":
     try:
-        import pyttsx3
+        import pyttsx3  # type: ignore
         if sys.platform == 'win32':
             from .installers import windows
             importlib.reload(windows)
@@ -103,7 +103,6 @@ def unregister():
         bpy.utils.unregister_class(PrefsError)
     except:
         pass
-
 
     del bpy.types.Scene.text_to_speech
     de_register_handlers()

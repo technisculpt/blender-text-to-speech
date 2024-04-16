@@ -1,3 +1,5 @@
+# TODO after initial install some issue with pywintypes ModuleNotFoundError maybe pypiwin32_append_paths not being called
+# FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\Users\\mlaga\\blender-4.2.0-alpha+main.09666e149871-windows.amd64-release\\blender-4.2.0-alpha+main.09666e149871-windows.amd64-release\\4.2\\python\\lib\\pywin32_system32\\pythoncom310.dll' -> 'C:\\Users\\mlaga\\blender-4.2.0-alpha+main.09666e149871-windows.amd64-release\\blender-4.2.0-alpha+main.09666e149871-windows.amd64-release\\4.2\\python\\lib\\win32\\lib\\pythoncom310.dll'
 import subprocess
 from pathlib import Path
 import os

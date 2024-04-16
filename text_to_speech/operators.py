@@ -3,10 +3,10 @@ import importlib
 import os
 
 import bpy
-from bpy.types import Operator
-from bpy_extras.io_utils import ImportHelper, ExportHelper
-from bpy.app.handlers import persistent
-from bpy.props import StringProperty, EnumProperty, BoolProperty
+from bpy_extras.io_utils import ImportHelper, ExportHelper # type: ignore
+from bpy.types import Operator # type: ignore
+from bpy.app.handlers import persistent # type: ignore
+from bpy.props import EnumProperty # type: ignore
 
 from . import blender_time as b_time
 from . import caption as c
@@ -48,15 +48,12 @@ def remove_deleted_strips():
 
     it = 0
     end = len(global_captions)
-
     while(it < end):
-
         found = False
         for strip in seq.sequences_all:
-            if global_captions[it].filename == strip.name:
+            if global_captions[it].b_ID == strip.name:
                 found = True
                 global_captions[it].sound_strip = strip
-
         if not found:
             del global_captions[it]
             end -= 1
@@ -74,6 +71,14 @@ def sort_strips_by_time():
 
 @persistent
 def btts_load_handler(_scene):
+    """ 
+        btts_load_handler checks the blendfile for saved caption data and reconstructs the Caption instances
+        this is for persistent data across sessions for accurate exporting of audio captions to text files (closed captions) as the strips are
+        moved around and deleted. We store metadata of our Caption instances/objects in the blendfile and upon loading we reassociate the blender objects
+        i.e sound and text strips with our custom python class instances (they become caption.b_obj_sound_strip & caption.b_obj_text_strip)
+        the id of blender objects can change with undo/redo actions and across sessions so we assign the blender objects 'name' property
+        to serve as a unique identifier for reassociation with our custom python class instances where the id is assigned to the 'b_ID' property
+    """
     global global_captions
     if bpy.context.scene.text_to_speech.persistent_string:
         context = bpy.context
@@ -81,43 +86,47 @@ def btts_load_handler(_scene):
         seq = scene.sequence_editor
         captions_raw = bpy.context.scene.text_to_speech.persistent_string.split('`')
         captions_raw.pop()
+        _ = b_time.Time(-1, -1, -1, -1) # a flag to obtain timecodes from existing strips
 
         for caption in captions_raw:
-            caption_meta = caption.split('|')
-            filename = caption_meta[0]
-            cc_type = int(caption_meta[1])
-            voice = int(caption_meta[2])
-            name = caption_meta[3]
-            channel = int(caption_meta[4])
-            strip_text = caption_meta[5]
-            pitch = float(caption_meta[6])
-            rate = int(caption_meta[7])
-            caption_strip = -1
+            meta = caption.split('|')
+            b_id = meta[0]
+            c_type = int(meta[1])
+            voice = int(meta[2])
+            name = meta[3]
+            text = meta[4]
+            speech_channel = int(meta[5])
+            text_channel = int(meta[6])
+            pitch = float(meta[7])
+            rate = float(meta[8])
 
             for strip in seq.sequences_all:
-                if strip.name == filename:
+                if strip.name == b_id:
                     caption_strip = strip
+                    break
 
-            if caption_strip != -1:
-                new_cap = c.Caption(context, cc_type, name, strip_text,
-                        b_time.Time(-1, -1, -1, -1), b_time.Time(-1, -1, -1, -1),
-                        voice, channel, pitch, rate, 0, True, False, reconstruct=True)
+            if caption_strip:
+                new_cap = c.Caption(context, c_type, name, text, _, _, voice, speech_channel, text_channel, pitch, rate, True)
                 new_cap.sound_strip = caption_strip
-                new_cap.filename = filename
+                new_cap.b_id = b_id
                 new_cap.update_timecode()
                 global_captions.append(new_cap)
 
 @persistent
 def btts_save_handler(_scene):
+    """ 
+        btts_save_handler saves all the caption instances data into the blendfile (like a database) as Blender doesn't save the state of our custom
+        Python objects and pickle doesn't work if you have blender objects as class members. See btts_load_handler above for more info
+    """
     global global_captions
     remove_deleted_strips()
     sort_strips_by_time()
-    string_to_save = ""
 
-    for caption in global_captions:
-        string_to_save += f"{caption.sound_strip.name}|{caption.cc_type}|{caption.voice}|{caption.name}|{caption.channel}|{caption.text}|{caption.pitch}|{caption.rate}`"
+    serialized_instances = ""
+    for cap in global_captions:
+        serialized_instances += f"{cap.b_ID}|{cap.cc_type}|{cap.voice}|{cap.name}|{cap.text}|{cap.speech_channel}|{cap.text_channel}|{cap.pitch}|{cap.rate}`"
 
-    bpy.context.scene.text_to_speech.persistent_string = string_to_save
+    bpy.context.scene.text_to_speech.persistent_string = serialized_instances
 
 
 def check_output_dir()->bool:
@@ -126,7 +135,6 @@ def check_output_dir()->bool:
     if (bpy.context.scene.render.filepath[0:2] == "//"):
         relpath = True
         filepath_full = bpy.path.abspath(bpy.context.scene.render.filepath)
-
     return not os.path.exists(filepath_full)
 
 class TextToSpeechOperator(bpy.types.Operator):
@@ -137,24 +145,24 @@ class TextToSpeechOperator(bpy.types.Operator):
 
     def execute(self, context):
 
-        if check_output_dir():
-            self.report({'INFO'}, "Output path doesn't exist")
-            return {'CANCELLED'}
+        @classmethod
+        def poll(cls, context): 
+            props = context.scene.voronpi
+            return bool(props.string_field.strip()) and context.area.type != 'SEQUENCE_EDITOR'
         
         global global_captions
         seconds = bpy.context.scene.frame_current / bpy.context.scene.render.fps
-        tts_props = context.scene.text_to_speech
+        props = context.scene.text_to_speech
 
-        if not tts_props.string_field:
-            self.report({'INFO'}, "no text to convert")
-            return {'FINISHED'}
-
+        if check_output_dir():
+            self.report({'INFO'}, "Output path doesn't exist")
+            return {'CANCELLED'}
         else:
-            global_captions.append(
-                    c.Caption(context, 0, "", tts_props.string_field,
-                        b_time.Time(0, 0, seconds, 0), b_time.Time(-1, -1, -1, -1),
-                        tts_props.voice_enumerator, tts_props.channel, tts_props.pitch, tts_props.rate,
-                        tts_props.text_channel, True, False))
+            start_t = b_time.Time(0, 0, seconds, 0)
+            end_t = b_time.Time(-1, -1, -1, -1)
+            new_cap = c.Caption(context, 0, "", props.string_field, start_t, end_t, props.voice_enum,
+                              props.speech_channel, None, props.pitch, props.rate, False)
+            global_captions.append(new_cap)
             self.report({'INFO'}, "FINISHED")
             return {'FINISHED'}
 
@@ -182,7 +190,8 @@ class ClosedCaptionSet(): # translates cc files into a list of caption.Captions
                 self.text_caps[caption].select = False
             frame_pointer += self.captions[caption].sound_strip.frame_duration + bpy.context.scene.render.fps
 
-    def __init__(self, context, text, filename, gender, pitch, rate, channel, text_channel, tts_flag, text_flag):
+            
+    def __init__(self, context, text, filename, _voice, pitch, rate, speech_channel, text_channel, speech_flag, text_flag):
         ext = filename[-3:len(filename)]
         self.finished = False
 
@@ -195,8 +204,8 @@ class ClosedCaptionSet(): # translates cc files into a list of caption.Captions
                 self.finished = False
 
         elif ext == 'txt':
-            self.captions, self.text_caps = txt_import.import_cc(context, text, gender, pitch, rate, channel,
-                                                text_channel, tts_flag, text_flag)
+            self.captions, self.text_caps = txt_import.import_cc(context, text, _voice, pitch, rate, speech_channel,
+                                                text_channel, speech_flag, text_flag)
 
             if self.text_caps:
                 self.arrange_captions_by_time(with_text=True)
@@ -206,13 +215,13 @@ class ClosedCaptionSet(): # translates cc files into a list of caption.Captions
             self.finished = True
             
         elif ext == 'srt':
-            self.captions = srt_import.import_cc(context, text, gender, pitch, rate, channel,
-                                                text_channel, tts_flag, text_flag)
+            self.captions = srt_import.import_cc(context, text, _voice, pitch, rate, speech_channel,
+                                                text_channel, speech_flag, text_flag)
             self.finished = True
 
         elif ext == 'sbv':
-            self.captions = sbv_import.import_cc(context, text, gender, pitch, rate, channel,
-                                                text_channel, tts_flag, text_flag)
+            self.captions = sbv_import.import_cc(context, text, _voice, pitch, rate, speech_channel,
+                                                text_channel, speech_flag, text_flag)
             self.finished = True
 
 
@@ -220,18 +229,18 @@ class ImportClosedCapFile(Operator, ImportHelper):
     bl_idname = "_import.cc_file"
     bl_label = "Import CC Data"
 
-    codec: EnumProperty(
+    codec: EnumProperty(  # type: ignore
         name="File Encoding",
         description="Choose File Encoding",
         items = char_encoding.items,
         default='95')
 
-    tts_flag : bpy.props.BoolProperty(
+    tts_flag : bpy.props.BoolProperty( # type: ignore
         name="Text to speech",
         description="Option to create text to speech audio strips",
         default=True)
 
-    text_strip_flag : bpy.props.BoolProperty(
+    text_strip_flag : bpy.props.BoolProperty( # type: ignore
         name="Text strips",
         description="Option to create text strips",
         default=False)
@@ -240,13 +249,13 @@ class ImportClosedCapFile(Operator, ImportHelper):
 
         global global_captions
         f = Path(bpy.path.abspath(self.filepath))
-        tts_props = context.scene.text_to_speech
+        props = context.scene.text_to_speech
 
         if f.exists():
             enc = char_encoding.items[int(self.codec)][1]
             captions =  ClosedCaptionSet(context, f.read_text(encoding=enc).split("\n"), self.filepath,
-                                        tts_props.voice_enumerator, tts_props.pitch, tts_props.rate,
-                                        tts_props.channel, tts_props.text_channel, self.tts_flag, self.text_strip_flag)
+                                        props.voice_enum, props.pitch, props.rate,
+                                        props.speech_channel, props.text_channel, self.tts_flag, self.text_strip_flag)
             if captions.finished:
                 global_captions += captions.get()
                 return {'FINISHED'}
@@ -291,7 +300,7 @@ class ExportFileName(Operator, ExportHelper):
     bl_label = "Export CC Data"
     filename_ext = ""
     
-    filetype: EnumProperty(
+    filetype: EnumProperty( # type: ignore
         name="Filetype",
         description="Choose File Type",
         items=(
@@ -335,16 +344,13 @@ class ConvertToTextStrip(Operator):
 
         global global_captions
         global template_strip
-
         remove_deleted_strips()
-        tts_props = context.scene.text_to_speech
+        props = context.scene.text_to_speech
         template = text_strip.check_for_template(context)
-
         for cap in global_captions:
             if cap.sound_strip.select:
                 text_strip.text_strip(context, cap.text, cap.sound_strip.frame_start,
-                                    cap.sound_strip.frame_final_end, tts_props.text_channel, template)
-
+                                    cap.sound_strip.frame_final_end, props.text_channel, template)
         return {'FINISHED'}
 
 class CreateTemplateStrip(Operator):

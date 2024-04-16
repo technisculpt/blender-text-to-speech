@@ -8,7 +8,8 @@ def check_for_template(context):
             return strip
     return False
 
-def text_strip(context, text, start_frame, end_frame, strip_channel, template_strip):
+# TODO change this name maybe new_text_strip so instead of text_strip.text_strip() it would be text_strip.new_text_strip()
+def text_strip(context, text, start_frame, end_frame, strip_channel, template_strip=None):
     _scene = context.scene
     if not _scene.sequence_editor:
         _scene.sequence_editor_create()

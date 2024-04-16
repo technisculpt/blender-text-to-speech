@@ -8,7 +8,9 @@ from . import export_helper as lib
 header = ["cc_type", "voice", "name", "text",
         "start_time_hr", "start_time_min", "start_time_sec", "start_time_ms",
         "end_time_hr", "end_time_min", "end_time_sec", "end_time_ms",
-        "start_frame", "channel", "pitch", "rate"]
+        "start_frame", "speech_flag_channel", "pitch", "rate", "text_flag_channel"]
+        # if text_flag_channel is 0 there is no text strip, if > 0 there is a text strip and the value is the channel
+        # if speech_flag_channel is 0 there is no audio strip, if > 0 there is an audio strip and the value is the channel
 
 def export(filepath, captions):
     try:
@@ -20,6 +22,7 @@ def export(filepath, captions):
             for caption in range(len(captions)):
 
                 cap = []
+                #if captions[caption].channel:
                 cap.append(captions[caption].cc_type)
                 cap.append(captions[caption].voice)
                 cap.append(captions[caption].name)
